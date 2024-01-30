@@ -4,8 +4,6 @@ import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.repository.ParcoursRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Service pour la gestion des parcours.
  */
@@ -22,8 +20,18 @@ public class ParcoursService {
      *
      * @param parcoursRepository Repository des parcours à injecter.
      */
-    public ParcoursService(ParcoursRepository parcoursRepository) {
+    public ParcoursService(final ParcoursRepository parcoursRepository) {
         this.parcoursRepository = parcoursRepository;
+    }
+
+    /**
+     * Construit un nouveau ParcoursService en copiant les champs
+     * de l'instance originale de ParcoursService fournie.
+     *
+     * @param original L'instance originale de ParcoursService à copier.
+     */
+    public ParcoursService(ParcoursService original) {
+        this.parcoursRepository = original.parcoursRepository;
     }
 
     /**
@@ -31,7 +39,8 @@ public class ParcoursService {
      *
      * @param parcours Parcours à ajouter.
      */
-    public void addParcours(Parcours parcours) {
+    public void addParcours(final Parcours parcours) {
         parcoursRepository.insert(parcours);
     }
+
 }

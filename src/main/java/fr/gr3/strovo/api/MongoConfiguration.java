@@ -18,22 +18,24 @@ public class MongoConfiguration {
 
     /** Injection de dépendance MongoDatabaseFactory. */
     @Autowired
-    MongoDatabaseFactory mongoDbFactory;
+    private MongoDatabaseFactory mongoDbFactory;
 
     /** Injection de dépendance MongoMappingContext. */
     @Autowired
-    MongoMappingContext mongoMappingContext;
+    private MongoMappingContext mongoMappingContext;
 
     /**
      * Configure et fournit un bean MappingMongoConverter.
-     * Le MappingMongoConverter est responsable de la conversion des documents MongoDB en objets Java
-     * et vice versa. Il utilise le MongoDatabaseFactory et le MongoMappingContext fournis.
+     * Le MappingMongoConverter est responsable de la conversion
+     * des documents MongoDB en objets Java et vice versa.
+     * Il utilise le MongoDatabaseFactory et le MongoMappingContext fournis.
      * @return Bean MappingMongoConverter configuré
      */
     @Bean
     public MappingMongoConverter mappingMongoConverter() {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
-        MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mongoMappingContext);
+        MappingMongoConverter converter =
+                new MappingMongoConverter(dbRefResolver, mongoMappingContext);
         converter.setTypeMapper(new DefaultMongoTypeMapper(null));
         return converter;
     }

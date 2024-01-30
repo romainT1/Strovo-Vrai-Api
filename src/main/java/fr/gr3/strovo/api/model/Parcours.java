@@ -72,7 +72,8 @@ public class Parcours {
      * Crée une instance de Parcours.
      *
      * @param id identifiant unique du parcours
-     * @param userId identifiant unique de l'utilisateur ayant enregistré le parcours
+     * @param userId identifiant unique de l'utilisateur ayant enregistré
+     *               le parcours
      * @param name nom donné au parcours
      * @param description description du parcours
      * @param date date d'enregistrement du parcours
@@ -83,17 +84,22 @@ public class Parcours {
      * @param interestPointsIds liste des points d'intérêts associés au parcours
      * @param points liste des points formant le parcours
      */
-    public Parcours(String id, int userId, String name, String description, Date date, double time, float averageSpeed, float distance, int[] elevation, String[] interestPointsIds, String points) {
+    public Parcours(final String id, final int userId, final String name,
+                    final String description, final Date date,
+                    final double time, final float averageSpeed,
+                    final float distance, final int[] elevation,
+                    final String[] interestPointsIds, final String points)
+    {
         this.id = id;
         this.userId = userId;
         this.name = name;
         this.description = description;
-        this.date = date;
+        this.date = new Date(date.getTime());
         this.time = time;
         this.averageSpeed = averageSpeed;
         this.distance = distance;
-        this.elevation = elevation;
-        this.interestPointsIds = interestPointsIds;
+        this.elevation = elevation.clone();
+        this.interestPointsIds = interestPointsIds.clone();
         this.points = points;
     }
 
@@ -117,7 +123,7 @@ public class Parcours {
      *
      * @param id Identifiant du parcours.
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -135,7 +141,7 @@ public class Parcours {
      *
      * @param userId Identifiant de l'utilisateur.
      */
-    public void setUserId(int userId) {
+    public void setUserId(final int userId) {
         this.userId = userId;
     }
 
@@ -153,7 +159,7 @@ public class Parcours {
      *
      * @param name Nom du parcours.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -171,7 +177,7 @@ public class Parcours {
      *
      * @param description Description du parcours.
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -181,7 +187,7 @@ public class Parcours {
      * @return Date du parcours.
      */
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     /**
@@ -189,8 +195,8 @@ public class Parcours {
      *
      * @param date Description du parcours.
      */
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(final Date date) {
+        this.date = new Date(date.getTime());
     }
 
     /**
@@ -207,7 +213,7 @@ public class Parcours {
      *
      * @param time Temps du parcours.
      */
-    public void setTime(double time) {
+    public void setTime(final double time) {
         this.time = time;
     }
 
@@ -225,7 +231,7 @@ public class Parcours {
      *
      * @param averageSpeed Vitesse moyenne du parcours.
      */
-    public void setAverageSpeed(float averageSpeed) {
+    public void setAverageSpeed(final float averageSpeed) {
         this.averageSpeed = averageSpeed;
     }
 
@@ -243,7 +249,7 @@ public class Parcours {
      *
      * @param distance Distance du parcours.
      */
-    public void setDistance(float distance) {
+    public void setDistance(final float distance) {
         this.distance = distance;
     }
 
@@ -253,7 +259,7 @@ public class Parcours {
      * @return Dénivelé du parcours.
      */
     public int[] getElevation() {
-        return elevation;
+        return elevation.clone();
     }
 
     /**
@@ -261,8 +267,8 @@ public class Parcours {
      *
      * @param elevation Dénivelé positif et négatif du parcours.
      */
-    public void setElevation(int[] elevation) {
-        this.elevation = elevation;
+    public void setElevation(final int[] elevation) {
+        this.elevation = elevation.clone();
     }
 
     /**
@@ -279,8 +285,8 @@ public class Parcours {
      *
      * @param interestPointsIds Identifiants des points d'interêts du parcours.
      */
-    public void setInterestPointsIds(String[] interestPointsIds) {
-        this.interestPointsIds = interestPointsIds;
+    public void setInterestPointsIds(final String[] interestPointsIds) {
+        this.interestPointsIds = interestPointsIds.clone();
     }
 
     /**
@@ -297,7 +303,7 @@ public class Parcours {
      *
      * @param points Points du parcours.
      */
-    public void setPoints(String points) {
+    public void setPoints(final String points) {
         this.points = points;
     }
 }
