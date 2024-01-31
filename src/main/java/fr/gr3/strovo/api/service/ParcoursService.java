@@ -2,6 +2,7 @@ package fr.gr3.strovo.api.service;
 
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.repository.ParcoursRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,15 +14,13 @@ public class ParcoursService {
     /**
      * Repository pour l'accès aux données des parcours.
      */
-    private final ParcoursRepository parcoursRepository;
+    @Autowired
+    private ParcoursRepository parcoursRepository;
 
     /**
      * Constructeur du service.
-     *
-     * @param parcoursRepository Repository des parcours à injecter.
      */
-    public ParcoursService(final ParcoursRepository parcoursRepository) {
-        this.parcoursRepository = parcoursRepository;
+    public ParcoursService() {
     }
 
     /**
@@ -43,4 +42,13 @@ public class ParcoursService {
         parcoursRepository.insert(parcours);
     }
 
+    /**
+     * Récupère un parcours par son Id.
+     *
+     * @param parcoursId Identifiant du parcours à rechercher.
+     */
+    public Parcours getParcoursById(String parcoursId) {
+        return parcoursRepository.findById(parcoursId).orElseThrow(()
+                -> new RuntimeException(String.format("Cannot Find Parcours by Parcours Id - %s", parcoursId)));
+    }
 }
