@@ -19,8 +19,6 @@ public class ParcoursService {
 
     /**
      * Constructeur du service.
-     *
-     * @param parcoursRepository Repository des parcours à injecter.
      */
     public ParcoursService() {
     }

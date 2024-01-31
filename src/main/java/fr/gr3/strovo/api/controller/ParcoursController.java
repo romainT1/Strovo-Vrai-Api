@@ -5,10 +5,7 @@ import fr.gr3.strovo.api.service.ParcoursService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Contrôleur pour la gestion des parcours.
@@ -21,15 +18,12 @@ public class ParcoursController {
      * Service pour la gestion des parcours.
      */
     @Autowired
-    private final ParcoursService parcoursService;
+    private ParcoursService parcoursService;
 
     /**
      * Constructeur du contrôleur.
-     *
-     * @param parcoursService Service pour la gestion des parcours à injecter.
      */
-    public ParcoursController(final ParcoursService parcoursService) {
-        this.parcoursService = new ParcoursService(parcoursService);
+    public ParcoursController() {
     }
 
     /**
@@ -44,4 +38,14 @@ public class ParcoursController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Récupère parcours par son identifiant.
+     *
+     * @param parcoursId Parcours à récupérer.
+     * @return ResponseEntity avec le statut HTTP correspondant.
+     */
+    @GetMapping("/{parcoursId}")
+    public ResponseEntity getParcoursByParcoursId(@PathVariable String parcoursId) {
+        return ResponseEntity.ok(parcoursService.getParcoursById(parcoursId));
+    }
 }
