@@ -1,9 +1,12 @@
 package fr.gr3.strovo.api.service;
 
+import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.repository.ParcoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Service pour la gestion des parcours.
@@ -46,9 +49,22 @@ public class ParcoursService {
      * Récupère un parcours par son Id.
      *
      * @param parcoursId Identifiant du parcours à rechercher.
+     * @return le parcours correspondant à l'identifiant
      */
     public Parcours getParcoursById(String parcoursId) {
         return parcoursRepository.findById(parcoursId).orElseThrow(()
                 -> new RuntimeException(String.format("Cannot Find Parcours by Parcours Id - %s", parcoursId)));
+    }
+
+    /**
+     * Récupère la liste des parcours d'un utilisateur.
+     *
+     * @param userId Identifiant de l'utilisateur.
+     * @param filter Filtre correspondant à la recherche.
+     * @return les parcours associés à l'utilisateur et aux filtres
+     */
+    public List<Parcours> getParcoursByUserIdAndFilters(int userId, Filter filter) {
+
+        return parcoursRepository.findAllByUserIdAndFilters(userId, filter);
     }
 }
