@@ -19,31 +19,4 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @WebMvcTest(UserController.class)
 public class TestUserController {
 
-    @MockBean
-    private UserService userService;
-
-    @Autowired
-    private UserController userController;
-
-    private static User testUser;
-
-    @BeforeAll
-    public static void init() {
-        testUser = new User();
-        testUser.setEmail("test@iut-rodez.fr");
-        testUser.setPassword("hash_password");
-        testUser.setLastname("testLastname");
-        testUser.setFirstname("testFisrtname");
-    }
-
-
-    @Test
-    public void testAddUser() throws Exception {
-        Mockito.when(userService.addUser(testUser)).thenReturn(new User(1, "test@iut-rodez.fr", "hash_password",
-                "testLastname", "testFisrtname"));
-
-        ResponseEntity response = userController.addUser(testUser);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
 }

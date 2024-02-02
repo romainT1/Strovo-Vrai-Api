@@ -87,6 +87,22 @@ public class User {
     public User() { }
 
     /**
+     * Constructeur d'instance User.
+     * @param userId identifiant de l'utilisateur
+     * @param userEmail adresse mail de l'utilisateur
+     * @param userPassword mot de passe de l'utilisateur
+     * @param userLastname nom de famille de l'utilisateur
+     * @param userFirstname prénom de l'utilisateur
+     */
+    public User(int userId, String userEmail, String userPassword, String userLastname, String userFirstname) {
+        this.id = userId;
+        this.email = userEmail;
+        this.password = userPassword;
+        this.lastname = userLastname;
+        this.firstname = userFirstname;
+    }
+
+    /**
      * @return l'identifiant de l'utilisateur
      */
     public int getId() {
