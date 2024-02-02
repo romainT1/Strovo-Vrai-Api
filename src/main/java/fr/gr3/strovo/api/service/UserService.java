@@ -1,10 +1,8 @@
 package fr.gr3.strovo.api.service;
 
-import fr.gr3.strovo.api.model.UserModel;
+import fr.gr3.strovo.api.model.User;
 import fr.gr3.strovo.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,9 +19,19 @@ public class UserService {
     /**
      * Ajoute un utilisateur.
      *
-     * @param userModel utilisateur à ajouter
+     * @param user utilisateur à ajouter
      */
-    public void addUser(@RequestBody final UserModel userModel) {
-        userRepository.save(userModel);
+    public void addUser(@RequestBody final User user) {
+        userRepository.save(user);
+    }
+
+    /**
+     * Récupère un utilisateur à l'aide de l'email.
+     *
+     * @param email Adresse mail de l'utilisateur
+     * @return l'utilisateur trouvé.
+     */
+    public User findUserByEmail(final String email) {
+        return userRepository.findUserByEmail(email);
     }
 }

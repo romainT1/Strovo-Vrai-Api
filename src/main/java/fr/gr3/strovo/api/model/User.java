@@ -12,9 +12,21 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "user")
-public class UserModel {
-    
-    /** 
+public class User {
+
+    /** Longueur du champ address mail. */
+    private static final int EMAIL_LENGTH = 32;
+
+    /** Longueur du champ de mot de passe. */
+    private static final int PASSWORD_LENGTH = 32;
+
+    /** Longueur du champ nom de famille. */
+    private static final int LASTNAME_LENGTH = 15;
+
+    /** Longueur du champ prénom. */
+    private static final int FIRSTNAME_LENGTH = 15;
+
+    /**
      * Identifiant de l'utilisateur.
      * L'identifiant est généré par la méthode auto-increment
      */
@@ -23,7 +35,7 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    /** 
+    /**
      * Adresse mail de l'utilisateur.
      * L'adresse mail doit respecter les contraintes suivantes :
      * <ul>
@@ -32,10 +44,11 @@ public class UserModel {
      *     <li>Etre unique</li>
      * </ul>
      */
-    @Column(name = "email", length = 32, nullable = false, unique = true)
-    private String email; 
+    @Column(name = "email", length = EMAIL_LENGTH, nullable = false,
+            unique = true)
+    private String email;
 
-    /** 
+    /**
      * Mot de passe de l'utilisateur.
      * Le mot de passe doit respecter les contraintes suivantes :
      * <ul>
@@ -43,10 +56,10 @@ public class UserModel {
      *     <li>Ne pas être null</li>
      * </ul>
      */
-    @Column(name = "password", length = 64, nullable = false)
+    @Column(name = "password", length = PASSWORD_LENGTH, nullable = false)
     private String password;
 
-    /** 
+    /**
      * Nom de famille de l'utilisateur.
      * Le nom de famille doit respecter les contraintes suivantes :
      * <ul>
@@ -54,10 +67,10 @@ public class UserModel {
      *     <li>Ne pas être null</li>
      * </ul>
      */
-    @Column(name = "lastname", length = 15, nullable = false)
+    @Column(name = "lastname", length = LASTNAME_LENGTH, nullable = false)
     private String lastname;
 
-    /** 
+    /**
      * Prénom de l'utilisateur.
      * Le prénom doit respecter les contraintes suivantes :
      * <ul>
@@ -65,31 +78,13 @@ public class UserModel {
      *     <li>Ne pas être null</li>
      * </ul>
      */
-    @Column(name = "firstname", length = 15, nullable = false)
+    @Column(name = "firstname", length = FIRSTNAME_LENGTH, nullable = false)
     private String firstname;
 
     /**
      * Constructeur d'instance User.
      */
-    public UserModel() { }
-
-
-    /**
-     * Constructeur d'instance User.
-     * 
-     * @param id identifiant de l'utilisateur
-     * @param email adresse mail de l'utilisateur
-     * @param password mot de passe de l'utilisateur
-     * @param lastname nom de famille de l'utilisateur
-     * @param firstname prénom de l'utilisateur
-     */
-    public UserModel(int id, String email, String password, String lastname, String firstname) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.lastname = lastname;
-        this.firstname = firstname;
-    }
+    public User() { }
 
     /**
      * @return l'identifiant de l'utilisateur
@@ -107,11 +102,10 @@ public class UserModel {
 
     /**
      * Modifie l'adresse mail de l'utilisateur.
-     * 
-     * @param email nouvelle adresse mail
+     * @param newEmail nouvelle adresse mail
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(final String newEmail) {
+        this.email = newEmail;
     }
 
     /**
@@ -123,11 +117,10 @@ public class UserModel {
 
     /**
      * Modifie le mot de passe de l'utilisateur.
-     * 
-     * @param password nouveau mot de passe
+     * @param newPassword nouveau mot de passe
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(final String newPassword) {
+        this.password = newPassword;
     }
 
     /**
@@ -139,11 +132,10 @@ public class UserModel {
 
     /**
      * Modifie le nom de famille de l'utilisateur.
-     * 
-     * @param lastname nouveau nom de famille
+     * @param newLastname nouveau nom de famille
      */
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastname(final String newLastname) {
+        this.lastname = newLastname;
     }
 
     /**
@@ -155,10 +147,9 @@ public class UserModel {
 
     /**
      * Modifie le prénom de l'utilisateur.
-     * 
-     * @param firstname nouveau prénom
+     * @param newFirstname nouveau prénom
      */
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstname(final String newFirstname) {
+        this.firstname = newFirstname;
     }
 }
