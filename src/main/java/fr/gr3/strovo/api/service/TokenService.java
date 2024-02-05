@@ -1,0 +1,88 @@
+package fr.gr3.strovo.api.service;
+
+import java.util.Date;
+import java.util.UUID;
+
+import fr.gr3.strovo.api.model.Token;
+import fr.gr3.strovo.api.model.User;
+
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+/**
+ * Service pour la gestion des tokens.
+ */
+@Service
+public class TokenService {
+
+    /** Clé de chiffrement du token */
+    private static final String KEY = "test"; // TODO changer
+
+    /** Algorithme de chiffrement du toke.n */
+    private static final Algorithm algorithm = Algorithm.HMAC256(KEY);
+
+    /** Durée de vie du token en heures. */
+    private static final int TOKEN_LIFE_TIME = 24;
+
+    /** Champ identifiant dans le token. */
+    private static final String ID_KEY = "id";
+
+    /**
+     * Génère un token à partir de l'algotihme HMAC256.
+     * Le token contient l'identifiant de l'utilisateur, il expire sous 24h.
+     * 
+     * @param user utilisateur demandant le token
+     * @return un token utilisable par l'utilisateur
+     */
+    public Token generateToken(User user) {
+        long tokenLifeTimeMillis = TOKEN_LIFE_TIME * 3600000;
+        String token = JWT.create()
+                .withClaim(ID_KEY, String.valueOf(user.getId()))
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + tokenLifeTimeMillis))
+                .withJWTId(UUID.randomUUID().toString())
+                .sign(algorithm);
+        System.out.println(getIdFromToken(token));
+        return new Token(token);
+    }
+
+    /**
+     * Vérifie la validité du token d'un utilisateur.
+     * Un token est considéré comme valide si :
+     * <ul>
+     *     <li>Sa date d'expiration n'est pas dépassée</li>
+     *     <li>Il n'a pas été modifié</li>
+     * </ul>
+     * 
+     * @param token token à vérifier
+     * @return true si le token est valide, false sinon
+     */
+    public boolean isValidToken(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            verifier.verify(token);
+        } catch (JWTVerificationException jwtVerificationException) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Récupère l'identifiant utilisateur stocké dans le token.
+     * @param token token utilisateur en question
+     * @return l'indentifiant trouvé
+     */
+    public int getIdFromToken(String token) {
+        DecodedJWT jwt = JWT.require(algorithm).build()
+        .verify(token);
+
+        Claim id = jwt.getClaim(ID_KEY);
+        return Integer.parseInt(id.asString());
+    }
+}
