@@ -1,6 +1,8 @@
 package fr.gr3.strovo.api.controller;
 
+import fr.gr3.strovo.api.model.Token;
 import fr.gr3.strovo.api.model.User;
+import fr.gr3.strovo.api.service.TokenService;
 import fr.gr3.strovo.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /** Service pour la gestion des tokens. */
+    @Autowired
+    private TokenService tokenService;
+
     /**
      * Ajoute un utilisateur.
      *
@@ -31,10 +37,9 @@ public class UserController {
      * <ul>
      *     <li>code 201 CREATED - si utilisateur ajouté</li>
      *     <li>code 409 CONFLICT - si email déjà utilisé</li>
-     *     <li>code 400 BAD_REQUEST - si utilisateur ajouté</li>
      * </ul>
      */
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<Object> addUser(@RequestBody final User user) {
         if (userService.findUserByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -46,15 +51,26 @@ public class UserController {
     }
 
     /**
-     * Récupère un utilisateur à l'aide de l'email.
+     * Renvoie un token d'authentification valide 24h
      *
-     * @param email Adresse mail de l'utilisateur à rechercher
-     * @return une réponse http contenant un code 200 et l'utilisateur trouvé
+     * @param email adresse mail de l'utilisateur
+     * @param password mot de passe de l'utilisateur
+     * @return une réponse http :
+     * <ul>
+     *     <li>code 200 OK - si token généré</li>
+     *     <li>code 403 FORBIDEN - si identifiants invalides</li>
+     * </ul>
      */
-    @GetMapping
-    public ResponseEntity<User> findUserByEmail(
-            @RequestParam() final String email) {
-        User user = userService.findUserByEmail(email);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/login")
+    public ResponseEntity<Token> loginUser(
+            @RequestParam() final String email,
+            @RequestParam() final String password) {
+        User user = userService.findUserByEmailAndPassword(email, password);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Token token = tokenService.generateToken(user);
+
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }
