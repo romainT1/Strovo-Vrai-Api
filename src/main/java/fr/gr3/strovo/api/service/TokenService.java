@@ -21,14 +21,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 @Service
 public class TokenService {
 
-    /** Clé de chiffrement du token */
+    /** Clé de chiffrement du token. */
     private static final String KEY = "test"; // TODO changer
 
-    /** Algorithme de chiffrement du toke.n */
-    private static final Algorithm algorithm = Algorithm.HMAC256(KEY);
-
-    /** Durée de vie du token en heures. */
-    private static final int TOKEN_LIFE_TIME = 24;
+    /** Algorithme de chiffrement du token. */
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256(KEY);
 
     /** Champ identifiant dans le token. */
     private static final String ID_KEY = "id";
@@ -36,19 +33,19 @@ public class TokenService {
     /**
      * Génère un token à partir de l'algotihme HMAC256.
      * Le token contient l'identifiant de l'utilisateur, il expire sous 24h.
-     * 
      * @param user utilisateur demandant le token
+     * @param expireIn millisecondes de validité avant expiration
      * @return un token utilisable par l'utilisateur
      */
-    public Token generateToken(User user) {
-        long tokenLifeTimeMillis = TOKEN_LIFE_TIME * 3600000;
+    public Token generateToken(final User user, final int expireIn) {
+        long tokenLifeTimeMillis = expireIn;
         String token = JWT.create()
                 .withClaim(ID_KEY, String.valueOf(user.getId()))
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + tokenLifeTimeMillis))
+                .withExpiresAt(new Date(System.currentTimeMillis()
+                        + tokenLifeTimeMillis))
                 .withJWTId(UUID.randomUUID().toString())
-                .sign(algorithm);
-        System.out.println(getIdFromToken(token));
+                .sign(ALGORITHM);
         return new Token(token);
     }
 
@@ -59,14 +56,13 @@ public class TokenService {
      *     <li>Sa date d'expiration n'est pas dépassée</li>
      *     <li>Il n'a pas été modifié</li>
      * </ul>
-     * 
-     * @param token token à vérifier
+     * @param token valeur du token à vérifier
      * @return true si le token est valide, false sinon
      */
-    public boolean isValidToken(String token) {
+    public boolean isValidToken(final Token token) {
         try {
-            JWTVerifier verifier = JWT.require(algorithm).build();
-            verifier.verify(token);
+            JWTVerifier verifier = JWT.require(ALGORITHM).build();
+            verifier.verify(token.getValue());
         } catch (JWTVerificationException jwtVerificationException) {
             return false;
         }
@@ -78,9 +74,9 @@ public class TokenService {
      * @param token token utilisateur en question
      * @return l'indentifiant trouvé
      */
-    public int getIdFromToken(String token) {
-        DecodedJWT jwt = JWT.require(algorithm).build()
-        .verify(token);
+    public int getUserIdFromToken(final Token token) {
+        DecodedJWT jwt = JWT.require(ALGORITHM).build()
+        .verify(token.getValue());
 
         Claim id = jwt.getClaim(ID_KEY);
         return Integer.parseInt(id.asString());

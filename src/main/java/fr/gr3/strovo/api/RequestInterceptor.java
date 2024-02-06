@@ -4,6 +4,7 @@ package fr.gr3.strovo.api;
 import java.util.Arrays;
 import java.util.List;
 
+import fr.gr3.strovo.api.model.Token;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import fr.gr3.strovo.api.service.TokenService;
@@ -44,7 +45,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         boolean isAuthorized = true;
 
         if (authentificationNeeded(request)) {
-            String token = extractTokenFromRequest(request);
+            Token token = new Token(extractTokenFromRequest(request));
 
             if (! tokenService.isValidToken(token)) {
                 isAuthorized = false;

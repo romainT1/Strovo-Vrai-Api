@@ -1,7 +1,7 @@
 package fr.gr3.strovo.api.model;
 
 /**
- * Décrit un token
+ * Décrit un token.
  */
 public class Token {
 
@@ -12,7 +12,7 @@ public class Token {
      * Crée une instance de token.
      * @param tokenValue valeur du token
      */
-    public Token(String tokenValue) {
+    public Token(final String tokenValue) {
         this.value = tokenValue;
     }
 
@@ -27,7 +27,7 @@ public class Token {
      * Modifie la valeur du token.
      * @param newValue nouvelle valeur du token
      */
-    public void setValue(String newValue) {
+    public void setValue(final String newValue) {
         this.value = newValue;
     }
 }

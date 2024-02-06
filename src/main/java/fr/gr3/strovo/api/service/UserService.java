@@ -39,6 +39,7 @@ public class UserService {
      * Récupère un utilisateur à l'aide de l'email.
      *
      * @param email Adresse mail de l'utilisateur
+     * @param password Mot de passe de l'utilisateur
      * @return l'utilisateur trouvé.
      */
     public User findUserByEmailAndPassword(final String email,

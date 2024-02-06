@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    /** Durée de vie du token utilisateur (24h en millisecondes). */
+    private static final int TOKEN_LIFE_TIME = 86400000;
+
     /** Service pour la gestion des utilisateurs. */
     @Autowired
     private UserService userService;
@@ -51,14 +54,14 @@ public class UserController {
     }
 
     /**
-     * Renvoie un token d'authentification valide 24h
+     * Renvoie un token d'authentification valide 24h.
      *
      * @param email adresse mail de l'utilisateur
      * @param password mot de passe de l'utilisateur
      * @return une réponse http :
      * <ul>
      *     <li>code 200 OK - si token généré</li>
-     *     <li>code 403 FORBIDEN - si identifiants invalides</li>
+     *     <li>code 403 FORBIDDEN - si identifiants invalides</li>
      * </ul>
      */
     @GetMapping("/login")
@@ -69,7 +72,7 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        Token token = tokenService.generateToken(user);
+        Token token = tokenService.generateToken(user, TOKEN_LIFE_TIME);
 
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
