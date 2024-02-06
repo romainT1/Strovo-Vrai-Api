@@ -2,6 +2,7 @@ package fr.gr3.strovo.api.controller;
 
 import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.Parcours;
+import fr.gr3.strovo.api.service.InterestPointService;
 import fr.gr3.strovo.api.service.ParcoursService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,12 @@ public class ParcoursController {
      */
     @Autowired
     private ParcoursService parcoursService;
+
+    /**
+     * Service pour la gestion des points d'interet.
+     */
+    @Autowired
+    private InterestPointService interestPointService;
 
     /**
      * Constructeur du contrôleur.
@@ -75,5 +82,17 @@ public class ParcoursController {
 
         List<Parcours> parcoursList = parcoursService.getParcoursByUserIdAndFilters(userId, filter);
         return ResponseEntity.ok(parcoursList);
+    }
+
+    @DeleteMapping("/{parcoursId}")
+    public ResponseEntity deleteParcours(@PathVariable String parcoursId) {
+        Parcours parcours = parcoursService.getParcoursById(parcoursId);
+        parcoursService.deleteParcours(parcoursId);
+
+        String[] interestPointId = parcours.getInterestPointsIds();
+        for (String id : interestPointId) {
+            interestPointService.deleteInterestPoint(id);
+        }
+        return ResponseEntity.noContent().build();
     }
 }

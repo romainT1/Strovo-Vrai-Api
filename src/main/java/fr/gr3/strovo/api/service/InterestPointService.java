@@ -26,4 +26,14 @@ public class InterestPointService {
     public void addInterestPoint(InterestPoint interestPoint) {
         interestPointRepository.insert(interestPoint);
     }
+
+    public void deleteInterestPoint(String interestPointId) {
+        interestPointRepository.deleteById(interestPointId);
+    }
+
+    public InterestPoint getInterestPointById(String interestPointId) {
+        return interestPointRepository.findById(interestPointId).orElseThrow(()
+                -> new RuntimeException(String.format("Cannot Find Interest Point by Id - %s", interestPointId)));
+    }
+
 }
