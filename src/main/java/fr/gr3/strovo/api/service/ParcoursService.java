@@ -28,7 +28,7 @@ public class ParcoursService {
 
     /**
      * Construit un nouveau ParcoursService en copiant les champs
-     * de l'instance originale de ParcoursService fournie.
+     * de l'instance originale de ParcoursService fourni.
      *
      * @param original L'instance originale de ParcoursService à copier.
      */
@@ -66,5 +66,9 @@ public class ParcoursService {
     public List<Parcours> getParcoursByUserIdAndFilters(int userId, Filter filter) {
 
         return parcoursRepository.findAllByUserIdAndFilters(userId, filter);
+    }
+
+    public void deleteParcours(String parcoursId) {
+        parcoursRepository.deleteById(parcoursId);
     }
 }
