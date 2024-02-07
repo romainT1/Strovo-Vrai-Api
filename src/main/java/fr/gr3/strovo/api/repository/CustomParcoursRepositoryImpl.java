@@ -41,15 +41,17 @@ public class CustomParcoursRepositoryImpl implements CustomParcoursRepository{
 
         if (filter != null) {
             String nameParcours = filter.getNameParcours();
-            Date startDate = filter.getStartDate();
-            Date endDate = filter.getEndDate();
+            long startTimestamp = Long.parseLong(filter.getStartDate());
+            long endTimestamp = Long.parseLong(filter.getEndDate());
 
+            Date start = new Date(startTimestamp);
+            Date end = new Date(endTimestamp);
             if (nameParcours != null) {
                 criteria.and("name").is(filter.getNameParcours());
             }
 
-            if (startDate != null && endDate != null) {
-                criteria.and("date").gte(startDate).lte(endDate);
+            if (start != null && end != null) {
+                criteria.and("date").gte(start).lte(end);
             }
         }
 
