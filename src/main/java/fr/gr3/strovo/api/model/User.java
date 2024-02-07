@@ -112,6 +112,14 @@ public class User {
     }
 
     /**
+     * Modifie l'identifiant de l'utilisateur.
+     * @param newId nouvelle adresse mail
+     */
+    public void setId(int newId) {
+        this.id = newId;
+    }
+
+    /**
      * @return l'email de l'utilisateur
      */
     public String getEmail() {

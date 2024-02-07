@@ -84,8 +84,8 @@ public class ParcoursController {
             @PathVariable final int userId,
             @RequestParam(required = false) final String nom,
             @RequestParam(required = false) final Date dateDebut,
-            @RequestParam(required = false) final Date dateFin
-    ) {
+            @RequestParam(required = false) final Date dateFin) {
+      
         Filter filter = null;
         if (nom != null || dateDebut != null || dateFin != null) {
             filter = new Filter(nom, dateDebut, dateFin);

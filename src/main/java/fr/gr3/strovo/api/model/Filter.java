@@ -11,10 +11,10 @@ public class Filter {
     private String nameParcours;
 
     /** Date de début du parcours. */
-    private Date startDate;
+    private String startDate;
 
     /** Date de fin du parcours. */
-    private Date endDate;
+    private String endDate;
 
     /**
      * Crée une instance de Filtre.
@@ -23,7 +23,7 @@ public class Filter {
      * @param startDate date de début du parcours
      * @param endDate date de fin du parcours
      */
-    public Filter(String nameParcours, Date startDate, Date endDate) {
+    public Filter(String nameParcours, String startDate, String endDate) {
         this.nameParcours = nameParcours;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -52,7 +52,7 @@ public class Filter {
      *
      * @return la date de début de la recherche.
      */
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
@@ -61,7 +61,7 @@ public class Filter {
      *
      * @param startDate la date d'un parcours.
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -70,7 +70,7 @@ public class Filter {
      *
      * @return la date de fin de la recherche
      */
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -79,7 +79,7 @@ public class Filter {
      *
      * @param endDate la date d'un parcours.
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }
