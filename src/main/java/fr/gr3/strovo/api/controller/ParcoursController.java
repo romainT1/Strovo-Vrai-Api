@@ -72,8 +72,8 @@ public class ParcoursController {
     @GetMapping("/utilisateur/{userId}")
     public ResponseEntity getParcoursByUserId(@PathVariable int userId,
                                               @RequestParam(required = false) String nom,
-                                              @RequestParam(required = false) Date dateDebut,
-                                              @RequestParam(required = false) Date dateFin
+                                              @RequestParam(required = false) String dateDebut,
+                                              @RequestParam(required = false) String dateFin
     ) {
         Filter filter = null;
         if (nom != null || dateDebut != null || dateFin != null) {
