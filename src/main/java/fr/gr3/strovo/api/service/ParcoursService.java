@@ -32,7 +32,7 @@ public class ParcoursService {
      *
      * @param original L'instance originale de ParcoursService à copier.
      */
-    public ParcoursService(ParcoursService original) {
+    public ParcoursService(final ParcoursService original) {
         this.parcoursRepository = original.parcoursRepository;
     }
 
@@ -51,9 +51,11 @@ public class ParcoursService {
      * @param parcoursId Identifiant du parcours à rechercher.
      * @return le parcours correspondant à l'identifiant
      */
-    public Parcours getParcoursById(String parcoursId) {
+    public Parcours getParcoursById(final String parcoursId) {
         return parcoursRepository.findById(parcoursId).orElseThrow(()
-                -> new RuntimeException(String.format("Cannot Find Parcours by Parcours Id - %s", parcoursId)));
+                -> new RuntimeException(String.format(
+                        "Cannot Find Parcours by Parcours Id - %s",
+                parcoursId)));
     }
 
     /**
@@ -63,18 +65,31 @@ public class ParcoursService {
      * @param filter Filtre correspondant à la recherche.
      * @return les parcours associés à l'utilisateur et aux filtres
      */
-    public List<Parcours> getParcoursByUserIdAndFilters(int userId, Filter filter) {
+    public List<Parcours> getParcoursByUserIdAndFilters(
+            final int userId, final Filter filter) {
 
         return parcoursRepository.findAllByUserIdAndFilters(userId, filter);
     }
 
-    public void deleteParcours(String parcoursId) {
+    /**
+     * Supprime un parcours.
+     *
+     * @param parcoursId ID du parcours à supprimer.
+     */
+    public void deleteParcours(final String parcoursId) {
         parcoursRepository.deleteById(parcoursId);
     }
 
-    public void updateParcours(Parcours parcours) {
-        Parcours parcoursModify = parcoursRepository.findById(parcours.getId()).orElseThrow(()
-                -> new RuntimeException(String.format("Cannot Find Parcours by ID %s", parcours.getId())));
+    /**
+     * Modifie la description d'un parcours.
+     *
+     * @param parcours parcours a modifier.
+     */
+    public void updateParcours(final Parcours parcours) {
+        Parcours parcoursModify = parcoursRepository.findById(
+                parcours.getId()).orElseThrow(()
+                -> new RuntimeException(String.format(
+                        "Cannot Find Parcours by ID %s", parcours.getId())));
         parcoursModify.setDescription(parcours.getDescription());
 
         parcoursRepository.save(parcoursModify);

@@ -7,7 +7,16 @@ import fr.gr3.strovo.api.service.ParcoursService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 
 import java.util.Date;
 import java.util.List;
@@ -56,7 +65,8 @@ public class ParcoursController {
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
     @GetMapping("/{parcoursId}")
-    public ResponseEntity getParcoursByParcoursId(@PathVariable String parcoursId) {
+    public ResponseEntity getParcoursByParcoursId(
+                                @PathVariable final String parcoursId) {
         return ResponseEntity.ok(parcoursService.getParcoursById(parcoursId));
     }
 
@@ -70,22 +80,32 @@ public class ParcoursController {
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
     @GetMapping("/utilisateur/{userId}")
-    public ResponseEntity getParcoursByUserId(@PathVariable int userId,
-                                              @RequestParam(required = false) String nom,
-                                              @RequestParam(required = false) Date dateDebut,
-                                              @RequestParam(required = false) Date dateFin
+    public ResponseEntity getParcoursByUserId(
+            @PathVariable final int userId,
+            @RequestParam(required = false) final String nom,
+            @RequestParam(required = false) final Date dateDebut,
+            @RequestParam(required = false) final Date dateFin
     ) {
         Filter filter = null;
         if (nom != null || dateDebut != null || dateFin != null) {
             filter = new Filter(nom, dateDebut, dateFin);
         }
 
-        List<Parcours> parcoursList = parcoursService.getParcoursByUserIdAndFilters(userId, filter);
+        List<Parcours> parcoursList =
+                parcoursService.getParcoursByUserIdAndFilters(userId, filter);
         return ResponseEntity.ok(parcoursList);
     }
 
+    /**
+     * Supprime un parcours.
+     *
+     * @param parcoursId Identifiant du parcours.
+     * @return ResponseEntity avec le statut HTTP "No Content"
+     * (204) si la suppression est réussie.
+     */
     @DeleteMapping("/{parcoursId}")
-    public ResponseEntity deleteParcours(@PathVariable String parcoursId) {
+    public ResponseEntity deleteParcours(
+            @PathVariable final String parcoursId) {
         Parcours parcours = parcoursService.getParcoursById(parcoursId);
         parcoursService.deleteParcours(parcoursId);
 
@@ -96,8 +116,17 @@ public class ParcoursController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Met à jour les informations d'un parcours existant.
+     *
+     * @param parcours Parcours contenant les nouvelles informations
+     * à mettre à jour.
+     * @return ResponseEntity avec le statut HTTP "OK" (200)
+     * si la mise à jour est réussie.
+     */
     @PutMapping
-    public ResponseEntity updateParcours(@RequestBody Parcours parcours) {
+    public ResponseEntity updateParcours(
+            @RequestBody final Parcours parcours) {
         parcoursService.updateParcours(parcours);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

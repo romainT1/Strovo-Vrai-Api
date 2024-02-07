@@ -44,7 +44,8 @@ public class InterestPoint {
      * @param coordinatesParam Les coordonnées du point d'intérêt.
      */
     public InterestPoint(final String idParam, final String nameParam,
-                         final String descriptionParam, final int[] coordinatesParam) {
+                         final String descriptionParam,
+                         final int[] coordinatesParam) {
         this.id = idParam;
         this.name = nameParam;
         this.description = descriptionParam;
