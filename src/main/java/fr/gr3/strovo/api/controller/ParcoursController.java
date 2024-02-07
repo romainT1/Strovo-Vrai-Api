@@ -95,4 +95,10 @@ public class ParcoursController {
         }
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping
+    public ResponseEntity updateParcours(@RequestBody Parcours parcours) {
+        parcoursService.updateParcours(parcours);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

@@ -71,4 +71,13 @@ public class ParcoursService {
     public void deleteParcours(String parcoursId) {
         parcoursRepository.deleteById(parcoursId);
     }
+
+    public void updateParcours(Parcours parcours) {
+        Parcours parcoursModify = parcoursRepository.findById(parcours.getId()).orElseThrow(()
+                -> new RuntimeException(String.format("Cannot Find Parcours by ID %s", parcours.getId())));
+        parcoursModify.setDescription(parcours.getDescription());
+
+        parcoursRepository.save(parcoursModify);
+    }
+
 }
