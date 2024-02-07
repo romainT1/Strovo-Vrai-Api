@@ -21,8 +21,8 @@ public class UserService {
      *
      * @param user utilisateur à ajouter
      */
-    public void addUser(@RequestBody final User user) {
-        userRepository.save(user);
+    public User addUser(@RequestBody final User user) {
+        return userRepository.save(user);
     }
 
     /**
@@ -33,5 +33,17 @@ public class UserService {
      */
     public User findUserByEmail(final String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    /**
+     * Récupère un utilisateur à l'aide de l'email.
+     *
+     * @param email Adresse mail de l'utilisateur
+     * @param password Mot de passe de l'utilisateur
+     * @return l'utilisateur trouvé.
+     */
+    public User findUserByEmailAndPassword(final String email,
+                                           final String password) {
+        return userRepository.findUserByEmailAndPassword(email, password);
     }
 }
