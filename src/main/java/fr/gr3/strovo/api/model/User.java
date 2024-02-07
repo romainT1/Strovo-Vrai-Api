@@ -94,7 +94,9 @@ public class User {
      * @param userLastname nom de famille de l'utilisateur
      * @param userFirstname prénom de l'utilisateur
      */
-    public User(int userId, String userEmail, String userPassword, String userLastname, String userFirstname) {
+    public User(final int userId, final String userEmail,
+                final String userPassword,
+                final String userLastname, final String userFirstname) {
         this.id = userId;
         this.email = userEmail;
         this.password = userPassword;

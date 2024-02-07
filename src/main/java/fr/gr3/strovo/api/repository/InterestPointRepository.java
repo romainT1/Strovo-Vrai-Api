@@ -6,5 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 /**
  * Dépôt pour gérer les points d'intérêt.
  */
-public interface InterestPointRepository  extends MongoRepository<InterestPoint, String> {
+public interface InterestPointRepository
+        extends MongoRepository<InterestPoint, String> {
 }

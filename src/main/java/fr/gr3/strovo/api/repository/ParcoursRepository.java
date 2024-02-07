@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 /**
  * Interface décrivant un ParcoursReposiroty.
  */
-public interface ParcoursRepository extends MongoRepository<Parcours, String>, CustomParcoursRepository{
+public interface ParcoursRepository extends
+        MongoRepository<Parcours, String>, CustomParcoursRepository {
 
 }

@@ -23,10 +23,11 @@ public class InterestPointController {
     /**
      * Constructeur pour le contrôleur des points d'intérêt.
      *
-     * @param service Le service pour gérer les points d'intérêt.
+     * @param serviceInterestPoint Le service pour gérer les points d'intérêt.
      */
-    public InterestPointController(final InterestPointService service) {
-        this.service = service;
+    public InterestPointController(
+            final InterestPointService serviceInterestPoint) {
+        this.service = serviceInterestPoint;
     }
 
     /**
@@ -35,7 +36,8 @@ public class InterestPointController {
      * @return Une réponse indiquant que le point d'intérêt a été créé.
      */
     @PostMapping()
-    public ResponseEntity addInterestPoint(@RequestBody final InterestPoint point) {
+    public ResponseEntity addInterestPoint(
+            @RequestBody final InterestPoint point) {
         service.addInterestPoint(point);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
