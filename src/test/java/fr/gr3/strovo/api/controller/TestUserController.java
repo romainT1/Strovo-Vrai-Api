@@ -42,6 +42,30 @@ public class TestUserController {
     }
 
     @Test
+    public void testSignup() {
+        when(userService.addUser(user1)).thenReturn(user1);
+
+        // WHEN on s'inscrit avec un email et mot de passe valide
+        ResponseEntity<User> response = (userController.signupUser(user1));
+
+        // EXPECTED code retour 201 et l'utilisateur créé
+        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        Assertions.assertEquals(user1, response.getBody());
+    }
+
+    @Test
+    public void testSignupWithExistingEmail() {
+        when(userService.findUserByEmail(USER_EMAIL)).thenReturn(user1);
+
+        // WHEN on s'inscrit avec un email déjà utilisé
+        ResponseEntity<User> response = (userController.signupUser(user2));
+
+        // EXPECTED code retour 409
+        Assertions.assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
+    }
+
+    @Test
     public void testLoginWithValidEmailAndPassword() {
         int tokenLifetime = 86400000;
 

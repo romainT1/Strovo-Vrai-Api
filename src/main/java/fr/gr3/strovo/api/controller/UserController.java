@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 
     /** Durée de vie du token utilisateur (24h en millisecondes). */
-    private static final int TOKEN_LIFE_TIME = 86400000;
+    private static final int TOKEN_LIFETIME = 86400000;
 
     /** Service pour la gestion des utilisateurs. */
     @Autowired
@@ -43,14 +43,14 @@ public class UserController {
      * </ul>
      */
     @PostMapping("/signup")
-    public ResponseEntity<Object> addUser(@RequestBody final User user) {
+    public ResponseEntity<User> signupUser(@RequestBody final User user) {
         if (userService.findUserByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        userService.addUser(user);
+        User addedUser = userService.addUser(user);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
     }
 
     /**
@@ -72,7 +72,7 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        Token token = tokenService.generateToken(user, TOKEN_LIFE_TIME);
+        Token token = tokenService.generateToken(user, TOKEN_LIFETIME);
 
         return new ResponseEntity<>(token, HttpStatus.OK);
     }

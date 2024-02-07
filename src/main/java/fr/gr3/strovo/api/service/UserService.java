@@ -21,8 +21,8 @@ public class UserService {
      *
      * @param user utilisateur à ajouter
      */
-    public void addUser(@RequestBody final User user) {
-        userRepository.save(user);
+    public User addUser(@RequestBody final User user) {
+        return userRepository.save(user);
     }
 
     /**
