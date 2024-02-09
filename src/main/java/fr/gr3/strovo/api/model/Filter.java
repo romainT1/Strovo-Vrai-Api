@@ -15,11 +15,11 @@ public class Filter {
 
 
     /** Date de début du parcours. */
-    private Date startDate;
+    private String startDate;
 
 
     /** Date de fin du parcours. */
-    private Date endDate;
+    private String endDate;
 
 
     /**
@@ -30,8 +30,8 @@ public class Filter {
      * @param finalEndDate date de fin du parcours
      */
     public Filter(final String finalNameParcours,
-                  final Date finalStartDate,
-                  final Date finalEndDate) {
+                  final String finalStartDate,
+                  final String finalEndDate) {
         this.nameParcours = finalNameParcours;
         this.startDate = finalStartDate;
         this.endDate = finalEndDate;
@@ -63,7 +63,7 @@ public class Filter {
      *
      * @return la date de début de la recherche.
      */
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
@@ -73,7 +73,7 @@ public class Filter {
      *
      * @param finalStartDate la date d'un parcours.
      */
-    public void setStartDate(final Date finalStartDate) {
+    public void setStartDate(final String finalStartDate) {
         this.startDate = finalStartDate;
     }
 
@@ -83,7 +83,7 @@ public class Filter {
      *
      * @return la date de fin de la recherche
      */
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -93,7 +93,7 @@ public class Filter {
      *
      * @param finalEndDate la date d'un parcours.
      */
-    public void setEndDate(final Date finalEndDate) {
+    public void setEndDate(final String finalEndDate) {
         this.endDate = finalEndDate;
     }
 }
