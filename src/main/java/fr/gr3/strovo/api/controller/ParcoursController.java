@@ -83,8 +83,8 @@ public class ParcoursController {
     public ResponseEntity getParcoursByUserId(
             @PathVariable final int userId,
             @RequestParam(required = false) final String nom,
-            @RequestParam(required = false) final Date dateDebut,
-            @RequestParam(required = false) final Date dateFin) {
+            @RequestParam(required = false) final String dateDebut,
+            @RequestParam(required = false) final String dateFin) {
       
         Filter filter = null;
         if (nom != null || dateDebut != null || dateFin != null) {
