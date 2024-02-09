@@ -53,9 +53,9 @@ public class ParcoursController {
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
     @PostMapping
-    public ResponseEntity addParcours(@RequestBody final Parcours parcours) {
+    public Parcours addParcours(@RequestBody final Parcours parcours) {
         parcoursService.addParcours(parcours);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return parcours;
     }
 
     /**
