@@ -20,6 +20,7 @@ public class UserService {
      * Ajoute un utilisateur.
      *
      * @param user utilisateur à ajouter
+     * @return L'utilisateur créé
      */
     public User addUser(@RequestBody final User user) {
         return userRepository.save(user);

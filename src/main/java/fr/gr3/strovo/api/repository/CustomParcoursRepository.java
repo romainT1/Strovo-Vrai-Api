@@ -11,11 +11,14 @@ import java.util.List;
 public interface CustomParcoursRepository {
 
     /**
-     * Récupère la liste des parcours d'un utilisateur.
+     * Récupère la liste des parcours d'un utilisateur
+     * avec des filtres spécifiques.
      *
      * @param userId Identifiant de l'utilisateur.
      * @param filter Filtre correspondant à la recherche.
      * @return les parcours associés à l'utilisateur et aux filtres.
+     * @throws IllegalArgumentException Si l'ID de l'utilisateur est négatif
+     * ou si le filtre est invalide.
      */
     List<Parcours> findAllByUserIdAndFilters(int userId, Filter filter);
 }

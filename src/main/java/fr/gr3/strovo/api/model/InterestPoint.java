@@ -49,7 +49,7 @@ public class InterestPoint {
         this.id = idParam;
         this.name = nameParam;
         this.description = descriptionParam;
-        this.coordinates = coordinatesParam;
+        this.coordinates = coordinatesParam.clone();
     }
 
     /**
@@ -111,7 +111,7 @@ public class InterestPoint {
      * @return Les coordonnées du point d'intérêt.
      */
     public int[] getCoordinates() {
-        return coordinates;
+        return coordinates.clone();
     }
 
     /**
@@ -119,6 +119,6 @@ public class InterestPoint {
      * @param coordinatesParam Les coordonnées du point d'intérêt.
      */
     public void setCoordinates(final int[] coordinatesParam) {
-        this.coordinates = coordinatesParam;
+        this.coordinates = coordinatesParam.clone();
     }
 }
