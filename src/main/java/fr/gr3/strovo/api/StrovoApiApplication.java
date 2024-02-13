@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StrovoApiApplication {
 
     /**
-     * Constructeur de StrovoApiApplication.
+     * Constructeur privé de StrovoApiApplication.
      */
-    public StrovoApiApplication() {
-        super();
+    private StrovoApiApplication() {
+
     }
 
     /**

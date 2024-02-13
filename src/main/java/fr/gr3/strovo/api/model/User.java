@@ -115,7 +115,7 @@ public class User {
      * Modifie l'identifiant de l'utilisateur.
      * @param newId nouvelle adresse mail
      */
-    public void setId(int newId) {
+    public void setId(final int newId) {
         this.id = newId;
     }
 

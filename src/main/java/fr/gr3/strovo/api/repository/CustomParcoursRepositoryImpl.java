@@ -13,7 +13,7 @@ import java.util.List;
  * Implémentation personnalisée de l'interface {@link CustomParcoursRepository}
  * pour l'interaction avec la base de données MongoDB.
  */
-public class CustomParcoursRepositoryImpl implements CustomParcoursRepository{
+public class CustomParcoursRepositoryImpl implements CustomParcoursRepository {
 
     /**
      * Template Spring Data MongoDB permettant d'effectuer
@@ -24,16 +24,26 @@ public class CustomParcoursRepositoryImpl implements CustomParcoursRepository{
     /**
      * Constructeur de la classe CustomParcoursRepositoryImpl.
      *
-     * @param mongoTemplate Instance de {@link MongoTemplate}
+     * @param mongoTemplateRepo Instance de {@link MongoTemplate}
      *                      utilisée pour interagir avec
      *                      la base de données MongoDB.
      */
-    public CustomParcoursRepositoryImpl(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
+    public CustomParcoursRepositoryImpl(final MongoTemplate mongoTemplateRepo) {
+        this.mongoTemplate =
+                new MongoTemplate(mongoTemplateRepo.getMongoDatabaseFactory());
     }
 
+    /**
+     * Récupère la liste des parcours d'un utilisateur
+     * avec des filtres spécifiques.
+     *
+     * @param userId Identifiant de l'utilisateur.
+     * @param filter Filtre correspondant à la recherche.
+     * @return les parcours associés à l'utilisateur et aux filtres.
+     */
     @Override
-    public List<Parcours> findAllByUserIdAndFilters(int userId, Filter filter) {
+    public List<Parcours> findAllByUserIdAndFilters(final int userId,
+                                                    final Filter filter) {
         Query query = new Query();
 
         Criteria criteria = Criteria.where("userId").is(userId);

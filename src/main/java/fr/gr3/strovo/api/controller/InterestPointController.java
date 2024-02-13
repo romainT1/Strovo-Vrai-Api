@@ -27,7 +27,7 @@ public class InterestPointController {
      */
     public InterestPointController(
             final InterestPointService serviceInterestPoint) {
-        this.service = serviceInterestPoint;
+        this.service = new InterestPointService(serviceInterestPoint);
     }
 
     /**

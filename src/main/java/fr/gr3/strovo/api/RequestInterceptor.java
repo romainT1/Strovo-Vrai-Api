@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * Intercepteur de toutes les requêtes API.
  */
 public class RequestInterceptor implements HandlerInterceptor {
-    
+
     /** Points de terminaison ne nécessitant pas d'authentification. */
     private static final String[] NO_AUTHENTIFICATION_ENDPOINTS = {
         "/user/signup",
@@ -25,7 +25,7 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     /** Service pour la gestion des tokens. */
     private TokenService tokenService;
-    
+
     /**
      * Crée une instance RequestInterceptor.
      */
@@ -40,14 +40,15 @@ public class RequestInterceptor implements HandlerInterceptor {
      * du token.
      */
     @Override
-    public boolean preHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(final HttpServletRequest request,
+                             final HttpServletResponse response,
+                             final Object handler) throws Exception {
         boolean isAuthorized = true;
 
         if (authentificationNeeded(request)) {
             Token token = new Token(extractTokenFromRequest(request));
 
-            if (! tokenService.isValidToken(token)) {
+            if (!tokenService.isValidToken(token)) {
                 isAuthorized = false;
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
@@ -60,7 +61,7 @@ public class RequestInterceptor implements HandlerInterceptor {
      * @param request requête en question
      * @return le token si présent, null sinon
      */
-    private String extractTokenFromRequest(HttpServletRequest request) {
+    private String extractTokenFromRequest(final HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
@@ -69,9 +70,9 @@ public class RequestInterceptor implements HandlerInterceptor {
      * @param request requête en question
      * @return true si nécessite une authentification, false sinon
      */
-    private boolean authentificationNeeded(HttpServletRequest request) {
+    private boolean authentificationNeeded(final HttpServletRequest request) {
         List<String> noAuthList = Arrays.asList(NO_AUTHENTIFICATION_ENDPOINTS);
         System.out.println(request.getRequestURI());
-        return ! noAuthList.contains(request.getRequestURI());
+        return !noAuthList.contains(request.getRequestURI());
     }
 }

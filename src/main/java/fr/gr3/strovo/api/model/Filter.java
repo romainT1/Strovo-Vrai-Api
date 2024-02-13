@@ -1,9 +1,5 @@
 package fr.gr3.strovo.api.model;
 
-
-import java.util.Date;
-
-
 /**
  * Décrit le filtre correspondant à une recherche.
  */

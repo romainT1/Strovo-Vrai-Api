@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,7 +83,6 @@ public class ParcoursController {
             @RequestParam(required = false) final String nom,
             @RequestParam(required = false) final String dateDebut,
             @RequestParam(required = false) final String dateFin) {
-      
         Filter filter = null;
         if (nom != null || dateDebut != null || dateFin != null) {
             filter = new Filter(nom, dateDebut, dateFin);

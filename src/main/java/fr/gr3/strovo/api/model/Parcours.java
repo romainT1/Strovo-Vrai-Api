@@ -71,36 +71,42 @@ public class Parcours {
     /**
      * Crée une instance de Parcours.
      *
-     * @param id identifiant unique du parcours
-     * @param userId identifiant unique de l'utilisateur ayant enregistré
-     *               le parcours
-     * @param name nom donné au parcours
-     * @param description description du parcours
-     * @param date date d'enregistrement du parcours
-     * @param time durée du parcours
-     * @param averageSpeed vitesse moyenne de l'utilisateur
-     * @param distance distance parcourue par l'utilisateur
-     * @param elevation dénivelé positif et négatif du parcours
-     * @param interestPointsIds liste des points d'intérêts associés au parcours
-     * @param points liste des points formant le parcours
+     * @param idParcours identifiant unique du parcours
+     * @param userIdParcours identifiant unique de l'utilisateur ayant
+     *                       enregistré le parcours
+     * @param nameParcours nom donné au parcours
+     * @param descriptionParcours description du parcours
+     * @param dateParcours date d'enregistrement du parcours
+     * @param timeParcours durée du parcours
+     * @param averageSpeedParcours vitesse moyenne de l'utilisateur
+     * @param distanceParcours distance parcourue par l'utilisateur
+     * @param elevationParcours dénivelé positif et négatif du parcours
+     * @param interestPointsIdsParcours liste des points d'intérêts associés
+     *                                  au parcours
+     * @param pointsParcours liste des points formant le parcours
      */
-    public Parcours(final String id, final int userId, final String name,
-                    final String description, final Date date,
-                    final double time, final float averageSpeed,
-                    final float distance, final int[] elevation,
-                    final String[] interestPointsIds, final String points)
-    {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.description = description;
-        this.date = new Date(date.getTime());
-        this.time = time;
-        this.averageSpeed = averageSpeed;
-        this.distance = distance;
-        this.elevation = elevation.clone();
-        this.interestPointsIds = interestPointsIds.clone();
-        this.points = points;
+    public Parcours(final String idParcours,
+                    final int userIdParcours,
+                    final String nameParcours,
+                    final String descriptionParcours,
+                    final Date dateParcours,
+                    final double timeParcours,
+                    final float averageSpeedParcours,
+                    final float distanceParcours,
+                    final int[] elevationParcours,
+                    final String[] interestPointsIdsParcours,
+                    final String pointsParcours) {
+        this.id = idParcours;
+        this.userId = userIdParcours;
+        this.name = nameParcours;
+        this.description = descriptionParcours;
+        this.date = new Date(dateParcours.getTime());
+        this.time = timeParcours;
+        this.averageSpeed = averageSpeedParcours;
+        this.distance = distanceParcours;
+        this.elevation = elevationParcours.clone();
+        this.interestPointsIds = interestPointsIdsParcours.clone();
+        this.points = pointsParcours;
     }
 
     /**
@@ -121,10 +127,10 @@ public class Parcours {
     /**
      * Définit l'identifiant du parcours.
      *
-     * @param id Identifiant du parcours.
+     * @param idParcours Identifiant du parcours.
      */
-    public void setId(final String id) {
-        this.id = id;
+    public void setId(final String idParcours) {
+        this.id = idParcours;
     }
 
     /**
@@ -139,10 +145,10 @@ public class Parcours {
     /**
      * Définit l'identifiant de l'utilisateur associé au parcours.
      *
-     * @param userId Identifiant de l'utilisateur.
+     * @param userIdParcours Identifiant de l'utilisateur.
      */
-    public void setUserId(final int userId) {
-        this.userId = userId;
+    public void setUserId(final int userIdParcours) {
+        this.userId = userIdParcours;
     }
 
     /**
@@ -157,10 +163,10 @@ public class Parcours {
     /**
      * Définit le nom du parcours.
      *
-     * @param name Nom du parcours.
+     * @param nameParcours Nom du parcours.
      */
-    public void setName(final String name) {
-        this.name = name;
+    public void setName(final String nameParcours) {
+        this.name = nameParcours;
     }
 
     /**
@@ -175,10 +181,10 @@ public class Parcours {
     /**
      * Définit la description du parcours.
      *
-     * @param description Description du parcours.
+     * @param descriptionParcours Description du parcours.
      */
-    public void setDescription(final String description) {
-        this.description = description;
+    public void setDescription(final String descriptionParcours) {
+        this.description = descriptionParcours;
     }
 
     /**
@@ -193,10 +199,10 @@ public class Parcours {
     /**
      * Définit la date du parcours.
      *
-     * @param date Description du parcours.
+     * @param dateParcours Description du parcours.
      */
-    public void setDate(final Date date) {
-        this.date = new Date(date.getTime());
+    public void setDate(final Date dateParcours) {
+        this.date = new Date(dateParcours.getTime());
     }
 
     /**
@@ -211,10 +217,10 @@ public class Parcours {
     /**
      * Définit le temps du parcours.
      *
-     * @param time Temps du parcours.
+     * @param timeParcours Temps du parcours.
      */
-    public void setTime(final double time) {
-        this.time = time;
+    public void setTime(final double timeParcours) {
+        this.time = timeParcours;
     }
 
     /**
@@ -229,10 +235,10 @@ public class Parcours {
     /**
      * Définit la vitesse moyenne du parcours.
      *
-     * @param averageSpeed Vitesse moyenne du parcours.
+     * @param averageSpeedParcours Vitesse moyenne du parcours.
      */
-    public void setAverageSpeed(final float averageSpeed) {
-        this.averageSpeed = averageSpeed;
+    public void setAverageSpeed(final float averageSpeedParcours) {
+        this.averageSpeed = averageSpeedParcours;
     }
 
     /**
@@ -247,10 +253,10 @@ public class Parcours {
     /**
      * Définit la distance du parcours.
      *
-     * @param distance Distance du parcours.
+     * @param distanceParcours Distance du parcours.
      */
-    public void setDistance(final float distance) {
-        this.distance = distance;
+    public void setDistance(final float distanceParcours) {
+        this.distance = distanceParcours;
     }
 
     /**
@@ -265,10 +271,10 @@ public class Parcours {
     /**
      * Définit le dénivelé positif et négatif du parcours.
      *
-     * @param elevation Dénivelé positif et négatif du parcours.
+     * @param elevationParcours Dénivelé positif et négatif du parcours.
      */
-    public void setElevation(final int[] elevation) {
-        this.elevation = elevation.clone();
+    public void setElevation(final int[] elevationParcours) {
+        this.elevation = elevationParcours.clone();
     }
 
     /**
@@ -283,10 +289,11 @@ public class Parcours {
     /**
      * Définit les identifiants des points d'interêts du parcours.
      *
-     * @param interestPointsIds Identifiants des points d'interêts du parcours.
+     * @param interestPointsIdsParcours Identifiants des points
+     *                                  d'interêts du parcours.
      */
-    public void setInterestPointsIds(final String[] interestPointsIds) {
-        this.interestPointsIds = interestPointsIds.clone();
+    public void setInterestPointsIds(final String[] interestPointsIdsParcours) {
+        this.interestPointsIds = interestPointsIdsParcours.clone();
     }
 
     /**
@@ -301,9 +308,9 @@ public class Parcours {
     /**
      * Définit les points du parcours.
      *
-     * @param points Points du parcours.
+     * @param pointsParcours Points du parcours.
      */
-    public void setPoints(final String points) {
-        this.points = points;
+    public void setPoints(final String pointsParcours) {
+        this.points = pointsParcours;
     }
 }

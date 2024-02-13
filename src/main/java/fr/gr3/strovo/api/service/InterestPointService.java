@@ -24,6 +24,16 @@ public class InterestPointService {
     }
 
     /**
+     * Construit un nouveau InterestPointService en copiant les champs
+     * de l'instance originale de InterestPointService fourni.
+     *
+     * @param original L'instance originale de InterestPointService à copier.
+     */
+    public InterestPointService(final InterestPointService original) {
+        this.interestPointRepository = original.interestPointRepository;
+    }
+
+    /**
      * Méthode pour ajouter un point d'intérêt.
      * @param interestPoint Le point d'intérêt à ajouter.
      */
