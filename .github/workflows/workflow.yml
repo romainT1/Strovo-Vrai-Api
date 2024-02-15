@@ -22,8 +22,8 @@ jobs:
         cache: maven
        
     # Démarrage de Docker
-    - name: Start Docker
-      run: docker-compose -f "docker-compose.yml" up -d --build
+    #- name: Start Docker
+    #  run: docker-compose -f "docker-compose.yml" up -d --build
      
     # Construction avec Maven
     - name: Build with Maven
@@ -47,6 +47,6 @@ jobs:
         path: target/*.jar
      
     # Arrêt de Docker
-    - name: Stop Docker
-      if: always()
-      run: docker-compose down
+    #- name: Stop Docker
+    #  if: always()
+    #  run: docker-compose down
