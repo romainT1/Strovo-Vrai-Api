@@ -25,10 +25,23 @@ public class TokenService {
     private static final String KEY = "test"; // TODO changer
 
     /** Algorithme de chiffrement du token. */
-    private static final Algorithm ALGORITHM = Algorithm.HMAC256(KEY);
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256(generate256SecretKey());
 
     /** Champ identifiant dans le token. */
     private static final String ID_KEY = "id";
+
+    /**
+     * Génère une clé de 64 caractères (256bits).
+     * @return la clé générée
+     */
+    private static String generate256SecretKey() {
+        String key = "";
+        for (int i = 0; i < 4; i++) {
+            key += UUID.randomUUID().toString();
+        }
+        key = key.replaceAll("-", "");
+        return key;
+    }
 
     /**
      * Génère un token à partir de l'algotihme HMAC256.
