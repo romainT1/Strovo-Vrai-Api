@@ -13,7 +13,7 @@ public class StrovoApiApplication {
     /**
      * Constructeur privé de StrovoApiApplication.
      */
-    private StrovoApiApplication() {
+    public StrovoApiApplication() {
 
     }
 
