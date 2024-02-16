@@ -21,26 +21,19 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 @Service
 public class TokenService {
 
-    /** Clé de chiffrement du token. */
-    private static final String KEY = "test"; // TODO changer
-
     /** Algorithme de chiffrement du token. */
-    private static final Algorithm ALGORITHM = Algorithm.HMAC256(generate256SecretKey());
+    private static final Algorithm ALGORITHM =
+            Algorithm.HMAC256(generate128SecretKey());
 
     /** Champ identifiant dans le token. */
     private static final String ID_KEY = "id";
 
     /**
-     * Génère une clé de 64 caractères (256bits).
+     * Génère une clé de 32 caractères (128 bits).
      * @return la clé générée
      */
-    private static String generate256SecretKey() {
-        String key = "";
-        for (int i = 0; i < 4; i++) {
-            key += UUID.randomUUID().toString();
-        }
-        key = key.replaceAll("-", "");
-        return key;
+    private static String generate128SecretKey() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     /**
