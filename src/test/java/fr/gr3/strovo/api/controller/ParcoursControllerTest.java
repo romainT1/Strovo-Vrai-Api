@@ -37,13 +37,6 @@ public class ParcoursControllerTest {
     @InjectMocks
     private ParcoursController parcoursController;
 
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(parcoursController).build();
-    }
-
     @Test
     public void testAddParcours() throws Exception {
         // Créer un parcours
@@ -121,13 +114,31 @@ public class ParcoursControllerTest {
     }
 
     @Test
+    public void testGetParcoursByUserIdWithoutFilters() {
+        // Créer un parcours
+        Parcours parcours = new Parcours();
+        parcours.setId("123");
+        parcours.setDescription("Description");
+
+        // Configurer le mock pour retourner une liste de parcours lorsqu'ils sont recherchés par l'ID de l'utilisateur sans filtre
+        when(parcoursService.getParcoursByUserIdAndFilters(1, null)).thenReturn(Arrays.asList(parcours));
+
+        // Appeler la méthode getParcoursByUserId avec tous les paramètres à null
+        ResponseEntity<List<Parcours>> response = parcoursController.getParcoursByUserId(1, null, null, null);
+
+        // Vérifier que le statut de la réponse est OK et que le corps de la réponse est la liste de parcours attendue
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(Arrays.asList(parcours), response.getBody());
+    }
+
+    @Test
     public void testGetParcoursByUserIdWithFilters() {
         // Créer un parcours
         Parcours parcours = new Parcours();
         parcours.setId("123");
         parcours.setDescription("Description");
 
-        // Configurer le mock pour retourner une liste de parcours lorsqu'ils sont recherchés par l'ID de l'utilisateur et un filtre
+        // Configurer le mock pour retourner une liste de parcours lorsqu'ils sont recherchés par l'ID de l'utilisateur avec un filtre
         when(parcoursService.getParcoursByUserIdAndFilters(eq(1), any(Filter.class))).thenReturn(Arrays.asList(parcours));
 
         // Appeler la méthode getParcoursByUserId avec des valeurs non nulles pour nom, dateDebut et dateFin
@@ -145,6 +156,7 @@ public class ParcoursControllerTest {
         Assertions.assertEquals("dateDebut", filter.getStartDate());
         Assertions.assertEquals("dateFin", filter.getEndDate());
     }
+
 
 
 
