@@ -1,20 +1,20 @@
-package fr.gr3.strovo.api.service;
-
-import fr.gr3.strovo.api.model.InterestPoint;
-import fr.gr3.strovo.api.repository.InterestPointRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-public class InterestPointServiceTest {
-
+//package fr.gr3.strovo.api.service;
+//
+//import fr.gr3.strovo.api.model.InterestPoint;
+//import fr.gr3.strovo.api.repository.InterestPointRepository;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.MockitoAnnotations;
+//
+//import java.util.Optional;
+//
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.mockito.Mockito.*;
+//
+//public class InterestPointServiceTest {
+//
 //    @InjectMocks
 //    private InterestPointService interestPointService;
 //
@@ -60,4 +60,5 @@ public class InterestPointServiceTest {
 //        }
 //        verify(interestPointRepository, times(1)).findById(id);
 //    }
-}
+//}
+
