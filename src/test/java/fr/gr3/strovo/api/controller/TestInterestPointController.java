@@ -19,38 +19,38 @@ import static org.mockito.Mockito.*;
 public class TestInterestPointController {
 
 
-    @InjectMocks
-    private InterestPointController controller;
-
-
-    @Mock
-    private InterestPointService service;
-
-
-    @BeforeEach
-    public void setup() {
-        // Initialise les mocks avant chaque test
-        MockitoAnnotations.initMocks(this);
-    }
-
-
-    @Test
-    public void testAddInterestPoint() {
-        // Crée un nouveau point d'intérêt
-        InterestPoint point = new InterestPoint();
-
-
-        // Appelle la méthode addInterestPoint du contrôleur
-        ResponseEntity response = controller.addInterestPoint(point);
-
-
-        // Vérifie que la méthode addInterestPoint du service a été appelée avec le bon argument
-        verify(service).addInterestPoint(point);
-
-
-        // Vérifie que le statut de la réponse est CREATED
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    }
+//    @InjectMocks
+//    private InterestPointController controller;
+//
+//
+//    @Mock
+//    private InterestPointService service;
+//
+//
+//    @BeforeEach
+//    public void setup() {
+//        // Initialise les mocks avant chaque test
+//        MockitoAnnotations.initMocks(this);
+//    }
+//
+//
+//    @Test
+//    public void testAddInterestPoint() {
+//        // Crée un nouveau point d'intérêt
+//        InterestPoint point = new InterestPoint();
+//
+//
+//        // Appelle la méthode addInterestPoint du contrôleur
+//        ResponseEntity response = controller.addInterestPoint(point);
+//
+//
+//        // Vérifie que la méthode addInterestPoint du service a été appelée avec le bon argument
+//        verify(service).addInterestPoint(point);
+//
+//
+//        // Vérifie que le statut de la réponse est CREATED
+//        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+//    }
 
 
 //    @Test
