@@ -37,6 +37,17 @@ public class ParcoursService {
     }
 
     /**
+     * Associe le repository au service.
+     *
+     * @param parcoursRepositoryImpl le repository.
+     */
+    public void setParcoursRepository(final ParcoursRepository
+                                              parcoursRepositoryImpl) {
+        this.parcoursRepository = parcoursRepositoryImpl;
+    }
+
+
+    /**
      * Ajoute un nouveau parcours.
      *
      * @param parcours Parcours à ajouter.
@@ -93,6 +104,13 @@ public class ParcoursService {
         parcoursModify.setDescription(parcours.getDescription());
 
         parcoursRepository.save(parcoursModify);
+    }
+
+    /**
+     * @return le repository associé au service.
+     */
+    public ParcoursRepository getParcoursRepository() {
+        return this.parcoursRepository;
     }
 
 }
