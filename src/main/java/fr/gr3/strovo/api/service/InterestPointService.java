@@ -34,6 +34,15 @@ public class InterestPointService {
     }
 
     /**
+     * Associe le repository au service.
+     *
+     * @param interestPointRepositoryImpl le repository.
+     */
+    public void setInterestPointRepository(final InterestPointRepository
+                                              interestPointRepositoryImpl) {
+        this.interestPointRepository = interestPointRepositoryImpl;
+    }
+    /**
      * Méthode pour ajouter un point d'intérêt.
      * @param interestPoint Le point d'intérêt à ajouter.
      */
@@ -63,4 +72,13 @@ public class InterestPointService {
                                 interestPointId)));
     }
 
+    /**
+     * @return le repository associé au service.
+     */
+    public InterestPointRepository getInterestPointRepository() {
+        return this.interestPointRepository;
+    }
+
 }
+
+
