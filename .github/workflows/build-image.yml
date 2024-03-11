@@ -42,7 +42,7 @@ jobs:
         with:
           image: romaint1/strovo-api
           tags: latest
-          platform: linux/amd64,linux/arm64
+          platform: linux/arm64
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
