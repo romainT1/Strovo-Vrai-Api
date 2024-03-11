@@ -7,9 +7,9 @@ on:
 
 # Jobs à effectuer lors de l'exécution
 jobs:
-  build & publish:
+  build-publication-image:
 
-    # O.S. sur lequel vont être exécutées les jobs
+    # O.S. sur lequel vont être exécutés les jobs
     runs-on: ubuntu-latest
 
     # Etapes à effectuer
