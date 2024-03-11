@@ -40,12 +40,12 @@ jobs:
       - name: Build and push docker image
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
+          image: romaint1/strovo-api
+          tags: latest
+          platform: linux/amd64
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: romaint1/strovo-api:latest
         
 
     
