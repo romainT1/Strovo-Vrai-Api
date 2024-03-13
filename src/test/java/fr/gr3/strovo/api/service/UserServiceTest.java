@@ -47,9 +47,9 @@ public class UserServiceTest {
 
     @Test
     public void testFindUserByEmailAndPassword() {
-        //String email = "test@iut.com";
-        //String password = "password";
-        //userService.findUserByEmailAndPassword(email, password);
-        //verify(userRepository, times(1)).findUserByEmailAndPassword(email, password);
+        String email = "test@iut.com";
+        String password = "password";
+        userService.findUserByEmailAndPassword(email, password);
+        verify(userRepository, times(1)).findUserByEmailAndPassword(email, password);
     }
 }
