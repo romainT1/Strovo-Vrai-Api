@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserServiceTest {
 
@@ -22,8 +21,6 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -32,7 +29,7 @@ public class UserServiceTest {
     @Test
     public void testAddUser() {
         User user = new User();
-        user.setPassword(passwordEncoder.encode("password"));
+        user.setPassword("password");
         userService.addUser(user);
         verify(userRepository, times(1)).save(user);
     }
@@ -50,7 +47,7 @@ public class UserServiceTest {
         String password = "password";
         User user = new User();
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         when(userRepository.findUserByEmail(email)).thenReturn(user);
         userService.findUserByEmailAndPassword(email, password);
         verify(userRepository, times(1)).findUserByEmail(email);
@@ -72,7 +69,7 @@ public class UserServiceTest {
         String wrongPassword = "wrongPassword";
         User user = new User();
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         when(userRepository.findUserByEmail(email)).thenReturn(user);
         assertNull(userService.findUserByEmailAndPassword(email, wrongPassword));
         verify(userRepository, times(1)).findUserByEmail(email);
