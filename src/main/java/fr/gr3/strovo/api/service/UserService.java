@@ -23,7 +23,6 @@ public class UserService {
      * @return L'utilisateur créé
      */
     public User addUser(@RequestBody final User user) {
-        user.setPassword(user.getPassword());
         return userRepository.save(user);
     }
 
