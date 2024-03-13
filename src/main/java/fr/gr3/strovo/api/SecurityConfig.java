@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Configuration de la sécurité de l'API
+ * Configuration de la sécurité de l'API.
  */
 @EnableWebSecurity
 public class SecurityConfig {
@@ -16,13 +16,13 @@ public class SecurityConfig {
     /**
      * Fonction qui permet de désactiver la sécurité de base de Spring Security
      * car nous utilisons un système de token JWT.
-     * @param http
+     * @param http L'objet HttpSecurity à configurer
      * @return un objet SecurityFilterChain qui est utilisé
      *         par Spring Security pour appliquer la sécurité
-     * @throws Exception
+     * @throws Exception Si une erreur se produit lors de la configuration
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http)
             throws Exception {
         http.authorizeRequests().anyRequest().permitAll();
         return http.build();
