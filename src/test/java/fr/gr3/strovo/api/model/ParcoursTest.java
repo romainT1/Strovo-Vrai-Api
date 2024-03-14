@@ -2,7 +2,6 @@ package fr.gr3.strovo.api.model;
 
 import java.util.Date;
 
-import fr.gr3.strovo.api.model.Parcours;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +21,7 @@ public class ParcoursTest {
         float distance = 30.0f;
         int[] elevation = { 100, -50 };
         String[] interestPointsIds = { "poi1", "poi2" };
-        String points = "1,2;3,4;5,6";
+        double[][] points = {{15.0,14.0},{13.0,18.0}};
 
         // Création d'une instance de la classe Parcours avec le constructeur
         Parcours parcours = new Parcours(id, userId, name, description, date, time, averageSpeed, distance, elevation, interestPointsIds, points);
@@ -38,7 +37,7 @@ public class ParcoursTest {
         assertEquals(distance, parcours.getDistance(), 0.001);
         assertArrayEquals(elevation, parcours.getElevation());
         assertArrayEquals(interestPointsIds, parcours.getInterestPointsIds());
-        assertEquals(points, parcours.getPoints());
+        assertArrayEquals(points, parcours.getCoordinates());
     }
 
     @Test
@@ -207,17 +206,15 @@ public class ParcoursTest {
         Parcours parcours = new Parcours();
 
         // Initialisation de la valeur
-        String points = "1,2;3,4;5,6";
+        double[][] points = {{15.0,14.0},{13.0,18.0}};
 
         // Utilisation du setter pour définir la valeur
-        parcours.setPoints(points);
+        parcours.setPointsCoordinates(points);
 
         // Utilisation du getter pour obtenir la valeur
-        String returnedPoints = parcours.getPoints();
+        double[][] returnedPoints = parcours.getCoordinates();
 
         // Vérification que les points sont correctement définis
-        assertEquals(points, returnedPoints);
+        assertArrayEquals(points, returnedPoints);
     }
-
-
 }
