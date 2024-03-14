@@ -1,11 +1,14 @@
 package fr.gr3.strovo.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Document décrivant un Parcours effectué par un utilisateur.
@@ -63,10 +66,10 @@ public class Parcours {
     @JsonProperty("interestPointsIds")
     private String[] interestPointsIds;
 
-    /** Liste des points formant le parcours. */
+    /** Liste de coordonnées de points sous la forme [[lat, long], ...]. */
     @Field
-    @JsonProperty("points")
-    private String points;
+    @JsonProperty("coordinates")
+    private double[][] coordinates;
 
     /**
      * Crée une instance de Parcours.
@@ -83,7 +86,7 @@ public class Parcours {
      * @param elevationParcours dénivelé positif et négatif du parcours
      * @param interestPointsIdsParcours liste des points d'intérêts associés
      *                                  au parcours
-     * @param pointsParcours liste des points formant le parcours
+     * @param coordinates liste des coordonnées de points formant le parcours
      */
     public Parcours(final String idParcours,
                     final int userIdParcours,
@@ -95,18 +98,18 @@ public class Parcours {
                     final float distanceParcours,
                     final int[] elevationParcours,
                     final String[] interestPointsIdsParcours,
-                    final String pointsParcours) {
+                    final double[][] coordinates) {
         this.id = idParcours;
         this.userId = userIdParcours;
         this.name = nameParcours;
         this.description = descriptionParcours;
-        this.date = new Date(dateParcours.getTime());
+        this.date = dateParcours;
         this.time = timeParcours;
         this.averageSpeed = averageSpeedParcours;
         this.distance = distanceParcours;
         this.elevation = elevationParcours.clone();
         this.interestPointsIds = interestPointsIdsParcours.clone();
-        this.points = pointsParcours;
+        this.coordinates = coordinates.clone();
     }
 
     /**
@@ -193,7 +196,7 @@ public class Parcours {
      * @return Date du parcours.
      */
     public Date getDate() {
-        return new Date(date.getTime());
+        return date;
     }
 
     /**
@@ -202,7 +205,7 @@ public class Parcours {
      * @param dateParcours Description du parcours.
      */
     public void setDate(final Date dateParcours) {
-        this.date = new Date(dateParcours.getTime());
+        this.date = dateParcours;
     }
 
     /**
@@ -297,20 +300,20 @@ public class Parcours {
     }
 
     /**
-     * Obtient les points du parcours.
+     * Obtient les coordonnées des points du parcours.
      *
      * @return Points du parcours.
      */
-    public String getPoints() {
-        return points;
+    public double[][] getCoordinates() {
+        return coordinates;
     }
 
     /**
-     * Définit les points du parcours.
+     * Définit les coordonnées des points du parcours.
      *
-     * @param pointsParcours Points du parcours.
+     * @param coordinates Points du parcours.
      */
-    public void setPoints(final String pointsParcours) {
-        this.points = pointsParcours;
+    public void setPointsCoordinates(double[][] coordinates) {
+        this.coordinates = coordinates;
     }
 }
