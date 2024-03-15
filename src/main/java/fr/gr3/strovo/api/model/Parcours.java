@@ -48,8 +48,8 @@ public class Parcours {
 
     /** Vitesse moyenne du parcours. */
     @Field
-    @JsonProperty("averageSpeed")
-    private float averageSpeed;
+    @JsonProperty("speed")
+    private float speed;
 
     /** Distance parcourue. */
     @Field
@@ -59,12 +59,12 @@ public class Parcours {
     /** Dénivelé du parcours. */
     @Field
     @JsonProperty("elevation")
-    private int[] elevation;
+    private float elevation;
 
     /** Liste des points d'intérêts associés au parcours. */
     @Field
-    @JsonProperty("interestPointsIds")
-    private String[] interestPointsIds;
+    @JsonProperty("interestPoints")
+    private InterestPoint[] interestPoints;
 
     /** Liste de coordonnées de points sous la forme [[lat, long], ...]. */
     @Field
@@ -81,10 +81,10 @@ public class Parcours {
      * @param descriptionParcours description du parcours
      * @param dateParcours date d'enregistrement du parcours
      * @param timeParcours durée du parcours
-     * @param averageSpeedParcours vitesse moyenne de l'utilisateur
+     * @param speedParcours vitesse moyenne de l'utilisateur
      * @param distanceParcours distance parcourue par l'utilisateur
      * @param elevationParcours dénivelé positif et négatif du parcours
-     * @param interestPointsIdsParcours liste des points d'intérêts associés
+     * @param interestPointsParcours liste des points d'intérêts associés
      *                                  au parcours
      * @param coordinates liste des coordonnées de points formant le parcours
      */
@@ -94,10 +94,10 @@ public class Parcours {
                     final String descriptionParcours,
                     final Date dateParcours,
                     final double timeParcours,
-                    final float averageSpeedParcours,
+                    final float speedParcours,
                     final float distanceParcours,
-                    final int[] elevationParcours,
-                    final String[] interestPointsIdsParcours,
+                    final float elevationParcours,
+                    final InterestPoint[] interestPointsParcours,
                     final double[][] coordinates) {
         this.id = idParcours;
         this.userId = userIdParcours;
@@ -105,17 +105,19 @@ public class Parcours {
         this.description = descriptionParcours;
         this.date = dateParcours;
         this.time = timeParcours;
-        this.averageSpeed = averageSpeedParcours;
+        this.speed = speedParcours;
         this.distance = distanceParcours;
-        this.elevation = elevationParcours.clone();
-        this.interestPointsIds = interestPointsIdsParcours.clone();
-        this.coordinates = coordinates.clone();
+        this.elevation = elevationParcours;
+        this.interestPoints = interestPointsParcours;
+        this.coordinates = coordinates;
     }
 
     /**
      * Constructeur par défaut requis pour Mockito.
      */
     public Parcours() {
+        interestPoints = new InterestPoint[]{};
+        coordinates = new double[][]{};
     }
 
     /**
@@ -231,17 +233,17 @@ public class Parcours {
      *
      * @return Vitesse moyenne du parcours.
      */
-    public float getAverageSpeed() {
-        return averageSpeed;
+    public float getSpeed() {
+        return speed;
     }
 
     /**
      * Définit la vitesse moyenne du parcours.
      *
-     * @param averageSpeedParcours Vitesse moyenne du parcours.
+     * @param speedParcours Vitesse moyenne du parcours.
      */
-    public void setAverageSpeed(final float averageSpeedParcours) {
-        this.averageSpeed = averageSpeedParcours;
+    public void setSpeed(final float speedParcours) {
+        this.speed = speedParcours;
     }
 
     /**
@@ -267,8 +269,8 @@ public class Parcours {
      *
      * @return Dénivelé du parcours.
      */
-    public int[] getElevation() {
-        return elevation.clone();
+    public float getElevation() {
+        return elevation;
     }
 
     /**
@@ -276,8 +278,8 @@ public class Parcours {
      *
      * @param elevationParcours Dénivelé positif et négatif du parcours.
      */
-    public void setElevation(final int[] elevationParcours) {
-        this.elevation = elevationParcours.clone();
+    public void setElevation(final float elevationParcours) {
+        this.elevation = elevationParcours;
     }
 
     /**
@@ -285,18 +287,18 @@ public class Parcours {
      *
      * @return Identifiants des points d'interêts du parcours.
      */
-    public String[] getInterestPointsIds() {
-        return interestPointsIds != null ? interestPointsIds : new String[0];
+    public InterestPoint[] getInterestPoints() {
+        return interestPoints.clone();
     }
 
     /**
      * Définit les identifiants des points d'interêts du parcours.
      *
-     * @param interestPointsIdsParcours Identifiants des points
+     * @param interestPointsParcours Identifiants des points
      *                                  d'interêts du parcours.
      */
-    public void setInterestPointsIds(final String[] interestPointsIdsParcours) {
-        this.interestPointsIds = interestPointsIdsParcours.clone();
+    public void setInterestPoints(final InterestPoint[] interestPointsParcours) {
+        this.interestPoints = interestPointsParcours;
     }
 
     /**
@@ -314,6 +316,6 @@ public class Parcours {
      * @param coordinates Points du parcours.
      */
     public void setPointsCoordinates(double[][] coordinates) {
-        this.coordinates = coordinates;
+        this.coordinates = coordinates.clone();
     }
 }

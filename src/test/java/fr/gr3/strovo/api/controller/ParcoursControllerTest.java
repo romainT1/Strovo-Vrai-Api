@@ -1,6 +1,7 @@
 package fr.gr3.strovo.api.controller;
 
 import fr.gr3.strovo.api.model.Filter;
+import fr.gr3.strovo.api.model.InterestPoint;
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.service.ParcoursService;
 import org.junit.jupiter.api.Assertions;
@@ -17,6 +18,8 @@ import fr.gr3.strovo.api.service.InterestPointService;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,7 +72,11 @@ public class ParcoursControllerTest {
         Parcours parcours = new Parcours();
         parcours.setId("123");
         parcours.setDescription("Description");
-        parcours.setInterestPointsIds(new String[]{"ip1", "ip2", "ip3"});
+        InterestPoint[] interestPoints = { 
+            new InterestPoint("1", "IP", "IPTest", new double[]{45.0, 48.2}),
+            new InterestPoint("2", "IP", "IPTest", new double[]{60.0, 71.3}),
+        };
+        parcours.setInterestPoints(interestPoints);
 
         // Configurer le mock pour retourner le parcours lorsqu'il est recherché par son ID
         when(parcoursService.getParcoursById("123")).thenReturn(parcours);
@@ -82,11 +89,6 @@ public class ParcoursControllerTest {
 
         // Vérifier que la méthode deleteParcours a été appelée avec le bon argument
         verify(parcoursService, times(1)).deleteParcours("123");
-
-        // Vérifier que la méthode deleteInterestPoint a été appelée pour chaque point d'intérêt
-        for (String ipId : parcours.getInterestPointsIds()) {
-            verify(interestPointService, times(1)).deleteInterestPoint(ipId);
-        }
     }
 
 

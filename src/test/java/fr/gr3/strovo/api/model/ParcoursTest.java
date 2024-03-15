@@ -17,14 +17,17 @@ public class ParcoursTest {
         String description = "Description du parcours de test";
         Date date = new Date();
         double time = 10.5;
-        float averageSpeed = 20.0f;
+        float speed = 20.0f;
         float distance = 30.0f;
-        int[] elevation = { 100, -50 };
-        String[] interestPointsIds = { "poi1", "poi2" };
+        float elevation = 100.5f;
+        InterestPoint[] interestPoints = { 
+            new InterestPoint("1", "IP", "IPTest", new double[]{45.0, 48.2}),
+            new InterestPoint("2", "IP", "IPTest", new double[]{60.0, 71.3}),
+        };
         double[][] points = {{15.0,14.0},{13.0,18.0}};
 
         // WHEN on crée une instance de la classe Parcours avec ces valeurs
-        Parcours parcours = new Parcours(id, userId, name, description, date, time, averageSpeed, distance, elevation, interestPointsIds, points);
+        Parcours parcours = new Parcours(id, userId, name, description, date, time, speed, distance, elevation, interestPoints, points);
 
         // THEN les valeurs sont correctement définies
         assertEquals(id, parcours.getId());
@@ -32,11 +35,11 @@ public class ParcoursTest {
         assertEquals(name, parcours.getName());
         assertEquals(description, parcours.getDescription());
         assertEquals(date, parcours.getDate());
-        assertEquals(time, parcours.getTime(), 0.001);
-        assertEquals(averageSpeed, parcours.getAverageSpeed(), 0.001);
-        assertEquals(distance, parcours.getDistance(), 0.001);
-        assertArrayEquals(elevation, parcours.getElevation());
-        assertArrayEquals(interestPointsIds, parcours.getInterestPointsIds());
+        assertEquals(time, parcours.getTime());
+        assertEquals(speed, parcours.getSpeed());
+        assertEquals(distance, parcours.getDistance());
+        assertEquals(elevation, parcours.getElevation());
+        assertArrayEquals(interestPoints, parcours.getInterestPoints());
         assertArrayEquals(points, parcours.getCoordinates());
     }
 
@@ -59,11 +62,11 @@ public class ParcoursTest {
         Parcours parcours = new Parcours();
         
         // WHEN on définit une nouveau dénivelé
-        int[] elevation = { 100, -50 };
+        float elevation = 100.5f;
         parcours.setElevation(elevation);
 
         // THEN le nouveau dénivelé est correctement défini
-        assertArrayEquals(elevation, parcours.getElevation());
+        assertEquals(elevation, parcours.getElevation());
     }
 
     @Test
@@ -82,29 +85,32 @@ public class ParcoursTest {
 // Vous pouvez tester les autres setters de manière similaire à testSetUserId()
 
     @Test
-    public void testGetInterestPointsIds() {
+    public void testGetInterestPoints() {
         // Création d'une instance de la classe Parcours
         Parcours parcours = new Parcours();
 
         // Vérification que getInterestPointsIds() retourne un tableau vide si interestPointsIds est null
-        String[] interestPointsIds = parcours.getInterestPointsIds();
+        InterestPoint[] interestPointsIds = parcours.getInterestPoints();
         assertNotNull(interestPointsIds);
         assertEquals(0, interestPointsIds.length);
 
         // Initialisation de la valeur
-        String[] newInterestPointsIds = { "poi1", "poi2" };
+        InterestPoint[] interestPoints = { 
+            new InterestPoint("1", "IP", "IPTest", new double[]{45.0, 48.2}),
+            new InterestPoint("2", "IP", "IPTest", new double[]{60.0, 71.3}),
+        };
 
         // Utilisation du setter pour définir la valeur
-        parcours.setInterestPointsIds(newInterestPointsIds);
+        parcours.setInterestPoints(interestPoints);
 
         // Utilisation du getter pour obtenir la valeur
-        String[] returnedInterestPointsIds = parcours.getInterestPointsIds();
+        InterestPoint[] returnedInterestPointsIds = parcours.getInterestPoints();
 
         // Vérification que interestPointsIds est correctement défini
-        assertArrayEquals(newInterestPointsIds, returnedInterestPointsIds);
+        assertArrayEquals(interestPoints, returnedInterestPointsIds);
 
         // Vérification qu'un nouveau tableau a été créé
-        assertNotSame(newInterestPointsIds, returnedInterestPointsIds);
+        assertNotSame(interestPoints, returnedInterestPointsIds);
     }
 
     @Test
@@ -134,16 +140,16 @@ public class ParcoursTest {
     }
 
     @Test
-    public void testSetAverageSpeed() {
+    public void testSetSpeed() {
         // GIVEN une instance vide de la classe Parcours
         Parcours parcours = new Parcours();
 
         // WHEN on définit une nouvelle vitesse
-        float averageSpeed = 20.0f;
-        parcours.setAverageSpeed(averageSpeed);
+        float speed = 20.0f;
+        parcours.setSpeed(speed);
 
         // THEN la nouvelle vitesse est correctement définie
-        assertEquals(averageSpeed, parcours.getAverageSpeed());
+        assertEquals(speed, parcours.getSpeed());
     }
 
     @Test
