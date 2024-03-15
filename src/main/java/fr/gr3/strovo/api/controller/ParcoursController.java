@@ -106,11 +106,6 @@ public class ParcoursController {
             @PathVariable final String parcoursId) {
         Parcours parcours = parcoursService.getParcoursById(parcoursId);
         parcoursService.deleteParcours(parcoursId);
-
-        InterestPoint[] interestPoints = parcours.getInterestPoints();
-        for (InterestPoint interestPoint : interestPoints) {
-            interestPointService.deleteInterestPoint(interestPoint.getId());
-        }
         return ResponseEntity.noContent().build();
     }
 

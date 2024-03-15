@@ -73,8 +73,8 @@ public class ParcoursControllerTest {
         parcours.setId("123");
         parcours.setDescription("Description");
         InterestPoint[] interestPoints = { 
-            new InterestPoint("1", "IP", "IPTest", new double[]{45.0, 48.2}),
-            new InterestPoint("2", "IP", "IPTest", new double[]{60.0, 71.3}),
+            new InterestPoint("IP", "IPTest", new double[]{45.0, 48.2}),
+            new InterestPoint("IP", "IPTest", new double[]{60.0, 71.3})
         };
         parcours.setInterestPoints(interestPoints);
 

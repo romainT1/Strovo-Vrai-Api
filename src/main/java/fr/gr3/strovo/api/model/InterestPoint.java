@@ -11,13 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class InterestPoint {
 
     /**
-     * L'identifiant du point d'intérêt.
-     */
-    @Id
-    @JsonProperty("id")
-    private String id;
-
-    /**
      * Le nom du point d'intérêt.
      */
     @JsonProperty("name")
@@ -38,15 +31,13 @@ public class InterestPoint {
     /**
      * Constructeur pour un point d'intérêt.
      *
-     * @param idParam L'identifiant du point d'intérêt.
      * @param nameParam Le nom du point d'intérêt.
      * @param descriptionParam La description du point d'intérêt.
      * @param coordinatesParam Les coordonnées du point d'intérêt.
      */
-    public InterestPoint(final String idParam, final String nameParam,
+    public InterestPoint(final String nameParam,
                          final String descriptionParam,
                          final double[] coordinatesParam) {
-        this.id = idParam;
         this.name = nameParam;
         this.description = descriptionParam;
         this.coordinates = coordinatesParam;
@@ -58,21 +49,6 @@ public class InterestPoint {
     public InterestPoint() {
     }
 
-    /**
-     * Récupère l'identifiant du point d'intérêt.
-     * @return L'identifiant du point d'intérêt.
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Définit l'identifiant du point d'intérêt.
-     * @param idParam L'identifiant du point d'intérêt.
-     */
-    public void setId(final String idParam) {
-        this.id = idParam;
-    }
 
     /**
      * Récupère le nom du point d'intérêt.

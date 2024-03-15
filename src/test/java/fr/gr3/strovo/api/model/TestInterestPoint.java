@@ -12,18 +12,7 @@ public class TestInterestPoint {
 
     @BeforeEach
     public void setUp() {
-        interestPoint = new InterestPoint("1", "Cathédrale de Rodez", "Une cathédrale iconique de Rodez", coordinates);
-    }
-
-    @Test
-    public void testGetId() {
-        assertEquals("1", interestPoint.getId());
-    }
-
-    @Test
-    public void testSetId() {
-        interestPoint.setId("2");
-        assertEquals("2", interestPoint.getId());
+        interestPoint = new InterestPoint("Cathédrale de Rodez", "Une cathédrale iconique de Rodez", coordinates);
     }
 
     @Test
@@ -63,11 +52,9 @@ public class TestInterestPoint {
     @Test
     public void testDefaultConstructor() {
         InterestPoint defaultInterestPoint = new InterestPoint();
-        defaultInterestPoint.setId("3");
         defaultInterestPoint.setName("Cathédrale Notre Dame");
         defaultInterestPoint.setDescription("Une cathédrale médiévale");
         defaultInterestPoint.setCoordinates(new double[]{50.5, 60.5});
-        assertEquals("3", defaultInterestPoint.getId());
         assertEquals("Cathédrale Notre Dame", defaultInterestPoint.getName());
         assertEquals("Une cathédrale médiévale", defaultInterestPoint.getDescription());
         assertArrayEquals(new double[]{50.5, 60.5}, defaultInterestPoint.getCoordinates());
