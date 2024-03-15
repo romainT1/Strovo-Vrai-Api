@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 public class TestInterestPoint {
 
     private InterestPoint interestPoint;
-    private int[] coordinates = {10, 20};
+    private double[] coordinates = {10.2, 20.5};
 
     @BeforeEach
     public void setUp() {
@@ -55,7 +55,7 @@ public class TestInterestPoint {
 
     @Test
     public void testSetCoordinates() {
-        int[] newCoordinates = {30, 40};
+        double[] newCoordinates = {30.5, 40.3};
         interestPoint.setCoordinates(newCoordinates);
         assertArrayEquals(newCoordinates, interestPoint.getCoordinates());
     }
@@ -66,10 +66,10 @@ public class TestInterestPoint {
         defaultInterestPoint.setId("3");
         defaultInterestPoint.setName("Cathédrale Notre Dame");
         defaultInterestPoint.setDescription("Une cathédrale médiévale");
-        defaultInterestPoint.setCoordinates(new int[]{50, 60});
+        defaultInterestPoint.setCoordinates(new double[]{50.5, 60.5});
         assertEquals("3", defaultInterestPoint.getId());
         assertEquals("Cathédrale Notre Dame", defaultInterestPoint.getName());
         assertEquals("Une cathédrale médiévale", defaultInterestPoint.getDescription());
-        assertArrayEquals(new int[]{50, 60}, defaultInterestPoint.getCoordinates());
+        assertArrayEquals(new double[]{50.5, 60.5}, defaultInterestPoint.getCoordinates());
     }
 }

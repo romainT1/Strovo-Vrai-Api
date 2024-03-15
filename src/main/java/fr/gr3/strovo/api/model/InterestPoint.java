@@ -33,7 +33,7 @@ public class InterestPoint {
      * Les coordonnées du point d'intérêt.
      */
     @JsonProperty("coordinates")
-    private int[] coordinates;
+    private double[] coordinates;
 
     /**
      * Constructeur pour un point d'intérêt.
@@ -45,11 +45,11 @@ public class InterestPoint {
      */
     public InterestPoint(final String idParam, final String nameParam,
                          final String descriptionParam,
-                         final int[] coordinatesParam) {
+                         final double[] coordinatesParam) {
         this.id = idParam;
         this.name = nameParam;
         this.description = descriptionParam;
-        this.coordinates = coordinatesParam.clone();
+        this.coordinates = coordinatesParam;
     }
 
     /**
@@ -110,7 +110,7 @@ public class InterestPoint {
      * Récupère les coordonnées du point d'intérêt.
      * @return Les coordonnées du point d'intérêt.
      */
-    public int[] getCoordinates() {
+    public double[] getCoordinates() {
         return coordinates.clone();
     }
 
@@ -118,7 +118,7 @@ public class InterestPoint {
      * Définit les coordonnées du point d'intérêt.
      * @param coordinatesParam Les coordonnées du point d'intérêt.
      */
-    public void setCoordinates(final int[] coordinatesParam) {
+    public void setCoordinates(final double[] coordinatesParam) {
         this.coordinates = coordinatesParam.clone();
     }
 }

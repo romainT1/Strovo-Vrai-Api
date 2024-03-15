@@ -3,7 +3,6 @@ package fr.gr3.strovo.api.service;
 
 import fr.gr3.strovo.api.model.InterestPoint;
 import fr.gr3.strovo.api.repository.InterestPointRepository;
-import fr.gr3.strovo.api.service.InterestPointService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

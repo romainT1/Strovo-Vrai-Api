@@ -1,6 +1,7 @@
 package fr.gr3.strovo.api.controller;
 
 import fr.gr3.strovo.api.model.Filter;
+import fr.gr3.strovo.api.model.InterestPoint;
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.service.InterestPointService;
 import fr.gr3.strovo.api.service.ParcoursService;
@@ -106,9 +107,9 @@ public class ParcoursController {
         Parcours parcours = parcoursService.getParcoursById(parcoursId);
         parcoursService.deleteParcours(parcoursId);
 
-        String[] interestPointId = parcours.getInterestPointsIds();
-        for (String id : interestPointId) {
-            interestPointService.deleteInterestPoint(id);
+        InterestPoint[] interestPoints = parcours.getInterestPoints();
+        for (InterestPoint interestPoint : interestPoints) {
+            interestPointService.deleteInterestPoint(interestPoint.getId());
         }
         return ResponseEntity.noContent().build();
     }
