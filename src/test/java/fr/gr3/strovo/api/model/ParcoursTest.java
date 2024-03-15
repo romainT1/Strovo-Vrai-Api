@@ -21,8 +21,8 @@ public class ParcoursTest {
         float distance = 30.0f;
         float elevation = 100.5f;
         InterestPoint[] interestPoints = { 
-            new InterestPoint("1", "IP", "IPTest", new double[]{45.0, 48.2}),
-            new InterestPoint("2", "IP", "IPTest", new double[]{60.0, 71.3}),
+            new InterestPoint("IP", "IPTest", new double[]{45.0, 48.2}),
+            new InterestPoint("IP", "IPTest", new double[]{60.0, 71.3}),
         };
         double[][] points = {{15.0,14.0},{13.0,18.0}};
 
@@ -96,8 +96,8 @@ public class ParcoursTest {
 
         // Initialisation de la valeur
         InterestPoint[] interestPoints = { 
-            new InterestPoint("1", "IP", "IPTest", new double[]{45.0, 48.2}),
-            new InterestPoint("2", "IP", "IPTest", new double[]{60.0, 71.3}),
+            new InterestPoint("IP", "IPTest", new double[]{45.0, 48.2}),
+            new InterestPoint("IP", "IPTest", new double[]{60.0, 71.3})
         };
 
         // Utilisation du setter pour définir la valeur
