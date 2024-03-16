@@ -3,20 +3,14 @@ package fr.gr3.strovo.api.controller;
 import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.InterestPoint;
 import fr.gr3.strovo.api.model.Parcours;
+import fr.gr3.strovo.api.model.Token;
 import fr.gr3.strovo.api.service.InterestPointService;
 import fr.gr3.strovo.api.service.ParcoursService;
+import fr.gr3.strovo.api.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +20,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/parcours")
 public class ParcoursController {
+
+    @Autowired
+    private TokenService tokenService;
 
     /**
      * Service pour la gestion des parcours.
@@ -52,9 +49,19 @@ public class ParcoursController {
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
     @PostMapping
-    public Parcours addParcours(@RequestBody final Parcours parcours) {
-        parcoursService.addParcours(parcours);
-        return parcours;
+    public ResponseEntity addParcours(@RequestBody final Parcours parcours,
+                                      @RequestHeader("Authorization") final String token) {
+        Token tokenAuth = new Token(token);
+        if (tokenService.isValidToken(tokenAuth)) {
+            int userId = tokenService.getUserIdFromToken(tokenAuth);
+
+            if (parcours.getUserId() == userId) {
+                parcoursService.addParcours(parcours);
+                return ResponseEntity.ok(parcours);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -65,33 +72,50 @@ public class ParcoursController {
      */
     @GetMapping("/{parcoursId}")
     public ResponseEntity getParcoursByParcoursId(
-                                @PathVariable final String parcoursId) {
-        return ResponseEntity.ok(parcoursService.getParcoursById(parcoursId));
+                                @PathVariable final String parcoursId,
+                                @RequestHeader("Authorization") final String token) {
+        Token tokenAuth = new Token(token);
+        if (tokenService.isValidToken(tokenAuth)) {
+            int userId = tokenService.getUserIdFromToken(tokenAuth);
+
+            Parcours parcours = parcoursService.getParcoursById(parcoursId);
+            if (parcours.getUserId() == userId) {
+                return ResponseEntity.ok(parcoursService.getParcoursById(parcoursId));
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
      * Récupère la liste des parcours d'un utilisateur avec des filtres.
      *
-     * @param userId Identifiant de l'utilisateur.
      * @param nom nom du parcours(non requis).
      * @param dateDebut date de début du parcours(non requis).
      * @param dateFin date de fin du parcours(non requis).
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
-    @GetMapping("/utilisateur/{userId}")
-    public ResponseEntity getParcoursByUserId(
-            @PathVariable final int userId,
+    @GetMapping()
+    public ResponseEntity getParcours(
             @RequestParam(required = false) final String nom,
             @RequestParam(required = false) final String dateDebut,
-            @RequestParam(required = false) final String dateFin) {
+            @RequestParam(required = false) final String dateFin,
+            @RequestHeader("Authorization") final String token) {
         Filter filter = null;
         if (nom != null || dateDebut != null || dateFin != null) {
             filter = new Filter(nom, dateDebut, dateFin);
         }
 
-        List<Parcours> parcoursList =
-                parcoursService.getParcoursByUserIdAndFilters(userId, filter);
-        return ResponseEntity.ok(parcoursList);
+        Token tokenAuth = new Token(token);
+        if (tokenService.isValidToken(tokenAuth)) {
+            int userId = tokenService.getUserIdFromToken(tokenAuth);
+
+            List<Parcours> parcoursList =
+                    parcoursService.getParcoursByUserIdAndFilters(userId, filter);
+            return ResponseEntity.ok(parcoursList);
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -103,10 +127,20 @@ public class ParcoursController {
      */
     @DeleteMapping("/{parcoursId}")
     public ResponseEntity deleteParcours(
-            @PathVariable final String parcoursId) {
-        Parcours parcours = parcoursService.getParcoursById(parcoursId);
-        parcoursService.deleteParcours(parcoursId);
-        return ResponseEntity.noContent().build();
+            @PathVariable final String parcoursId,
+            @RequestHeader("Authorization") final String token) {
+        Token tokenAuth = new Token(token);
+        if (tokenService.isValidToken(tokenAuth)) {
+            int userId = tokenService.getUserIdFromToken(tokenAuth);
+
+            Parcours parcours = parcoursService.getParcoursById(parcoursId);
+            if (parcours.getUserId() == userId) {
+                parcoursService.deleteParcours(parcoursId);
+                return ResponseEntity.noContent().build();
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -119,8 +153,18 @@ public class ParcoursController {
      */
     @PutMapping
     public ResponseEntity updateParcours(
-            @RequestBody final Parcours parcours) {
-        parcoursService.updateParcours(parcours);
-        return ResponseEntity.status(HttpStatus.OK).build();
+            @RequestBody final Parcours parcours,
+            @RequestHeader("Authorization") final String token) {
+        Token tokenAuth = new Token(token);
+        if (tokenService.isValidToken(tokenAuth)) {
+            int userId = tokenService.getUserIdFromToken(tokenAuth);
+
+            if (parcours.getUserId() == userId) {
+                parcoursService.updateParcours(parcours);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
