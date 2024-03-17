@@ -54,13 +54,12 @@ public class ParcoursController {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
-
-            if (parcours.getUserId() == userId) {
-                parcoursService.addParcours(parcours);
-                return ResponseEntity.ok(parcours);
-            }
+            parcours.setUserId(userId);
+            
+            parcoursService.addParcours(parcours);
+            return ResponseEntity.ok(parcours);
         }
-
+        
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
@@ -95,7 +94,7 @@ public class ParcoursController {
      * @param dateFin date de fin du parcours(non requis).
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getParcours(
             @RequestParam(required = false) final String nom,
             @RequestParam(required = false) final String dateDebut,
