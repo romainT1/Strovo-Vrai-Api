@@ -5,7 +5,6 @@ import fr.gr3.strovo.api.service.ParcoursService;
 import fr.gr3.strovo.api.service.TokenService;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,8 +25,6 @@ public class ParcoursControllerTest {
     private final static int USER_ID = 1; 
     private final static String PARCOURS_ID = "1"; 
     private final static String TOKEN = "fake_token"; 
-    private static Parcours parcours1;
-    private static Parcours parcours2;
 
     @InjectMocks
     private ParcoursController parcoursController;
@@ -39,16 +36,12 @@ public class ParcoursControllerTest {
     private TokenService tokenService;
 
 
-    @BeforeAll
-    public static void testInit() {
-        parcours1 = new Parcours();
-        parcours2 = new Parcours();
-        parcours1.setName("p1");
-        parcours2.setName("p2");
-    }
-
     @Test
     public void testAddParcours() throws Exception {
+        // GIVEN un parcours à ajouter
+        Parcours parcours1 = new Parcours();
+        parcours1.setName("p1");
+
         when(tokenService.isValidToken(any())).thenReturn(true);
         when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
         when(parcoursService.addParcours(parcours1)).thenReturn(parcours1);
@@ -66,7 +59,9 @@ public class ParcoursControllerTest {
 
     @Test
     public void testAddParcoursWithInvalidToken() throws Exception {
-        // GIVEN un token de connexion invalide
+        // GIVEN un token de connexion invalide et un parcours à ajouter
+        Parcours parcours1 = new Parcours();
+        parcours1.setName("p1");
         when(tokenService.isValidToken(any())).thenReturn(false);
 
         // WHEN on ajoute un parcours
@@ -171,7 +166,7 @@ public class ParcoursControllerTest {
 
     @Test
     public void testGetParcoursButNoParcoursFound() {
-        // GIVEN aucun parcours pour un utiliasteur en base de donnée
+        // GIVEN aucun parcours pour un utilisateur en base de donnée
         when(tokenService.isValidToken(any())).thenReturn(true);
         
         // WHEN on recherche la liste des parcours d'un utilisateur
@@ -215,13 +210,13 @@ public class ParcoursControllerTest {
         // WHEN on supprime un parcours de l' utilisateur
         ResponseEntity response = parcoursController.deleteParcours(id, TOKEN);
         
-        // EXPECTED code retour 204
+        // EXPECTED code retour 403
         Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         Assertions.assertNull(response.getBody());
     }
 
     @Test
-    public void testdeleteParcoursButParcoursNotFound() {
+    public void testDeleteParcoursButParcoursNotFound() {
         // GIVEN un identifiant de parcours introuvable en base de donnée
         String id = "p1";
 
@@ -229,12 +224,90 @@ public class ParcoursControllerTest {
         when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
         when(parcoursService.getParcoursById(id)).thenReturn(null);
 
-        // WHEN on supprime un parcours de l' utilisateur
+        // WHEN on supprime un parcours de l'utilisateur
         ResponseEntity response = parcoursController.deleteParcours(id, TOKEN);
         
         // EXPECTED code retour 204
         Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         Assertions.assertNull(response.getBody());
+    }
+
+
+
+    @Test
+    public void testUpdatePacours() {
+        // GIVEN un parcours à modifier pour un utilisateur en base de donnée
+        String id = "p1";
+
+        Parcours oldParcours = new Parcours();
+        oldParcours.setId(id);
+        oldParcours.setUserId(USER_ID);
+        oldParcours.setName("OP");
+        oldParcours.setDescription("oldParcours");
+
+        Parcours newParcours = new Parcours();
+        newParcours.setId(id);
+        newParcours.setUserId(USER_ID);
+        newParcours.setName("NP");
+        newParcours.setDescription("newParcours");
+
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+        when(parcoursService.getParcoursById(id)).thenReturn(oldParcours);
+        when(parcoursService.updateParcours(newParcours)).thenReturn(newParcours);
+
+        // WHEN on modifie le parcours de l'utilisateur
+        ResponseEntity<Parcours> response = parcoursController.updateParcours(newParcours, TOKEN);
+
+        // EXPECTED code retour 200
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(newParcours, response.getBody());
+    }
+
+    @Test
+    public void testUpdatePacoursButInvalidToken() {
+        // GIVEN un token de connexion invalide et un parcours à modifier
+        //       pour un utilisateur en base de donnée
+        String id = "1";
+
+        Parcours newParcours = new Parcours();
+        newParcours.setId(id);
+        newParcours.setUserId(USER_ID);
+        newParcours.setName("NP");
+        newParcours.setDescription("newParcours");
+
+        when(tokenService.isValidToken(any())).thenReturn(false);
+
+        // WHEN on modifie le parcours de l'utilisateur
+        ResponseEntity<Parcours> response = parcoursController.updateParcours(newParcours, TOKEN);
+
+        // EXPECTED code retour 403
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
+    }
+
+    @Test
+    public void testUpdatePacoursButParcoursNotFound() {
+        // GIVEN un parcours inexistant à modifier pour un utilisateur
+        //        en base de donnée
+       String id = "1";
+
+       Parcours newParcours = new Parcours();
+       newParcours.setId(id);
+       newParcours.setUserId(USER_ID);
+       newParcours.setName("NP");
+       newParcours.setDescription("newParcours");
+
+       when(tokenService.isValidToken(any())).thenReturn(true);
+       when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+       when(parcoursService.getParcoursById(id)).thenReturn(null);
+
+       // WHEN on modifie le parcours de l'utilisateur
+       ResponseEntity<Parcours> response = parcoursController.updateParcours(newParcours, TOKEN);
+
+       // EXPECTED code retour 200
+       Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+       Assertions.assertNull(response.getBody());
     }
     /*
 

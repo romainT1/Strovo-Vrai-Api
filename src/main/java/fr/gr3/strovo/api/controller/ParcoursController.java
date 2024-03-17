@@ -168,20 +168,33 @@ public class ParcoursController {
      *
      * @param parcours Parcours contenant les nouvelles informations
      * à mettre à jour.
-     * @return ResponseEntity avec le statut HTTP "OK" (200)
-     * si la mise à jour est réussie.
+     * @return ResponseEntity avec le statut HTTP correspondant
+     * et le parcours modifié
+     * <ul>
+     *     <li>code 200 OK - si parcours modifié</li>
+     *     <li>code 204 NO CONTENT - si parcours aucun trouvé</li>
+     *     <li>code 403 FORBIDDEN - si token invalide ou accès interdit</li>
+     * </ul>
      */
     @PutMapping
-    public ResponseEntity updateParcours(
+    public ResponseEntity<Parcours> updateParcours(
             @RequestBody final Parcours parcours,
             @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
 
+            Parcours parcoursToEdit = parcoursService.getParcoursById(parcours.getId());
+            if (parcoursToEdit == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
             if (parcours.getUserId() == userId) {
-                parcoursService.updateParcours(parcours);
-                return ResponseEntity.status(HttpStatus.OK).build();
+                Parcours newParcours = parcoursService.updateParcours(parcours);
+                if (newParcours == null) {
+                    return new ResponseEntity<>(newParcours, HttpStatus.OK);
+                }
+                return new ResponseEntity<>(newParcours, HttpStatus.OK);
             }
         }
 

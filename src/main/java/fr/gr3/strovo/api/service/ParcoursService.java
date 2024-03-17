@@ -1,6 +1,5 @@
 package fr.gr3.strovo.api.service;
 
-import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.repository.ParcoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,18 +88,13 @@ public class ParcoursService {
     }
 
     /**
-     * Modifie la description d'un parcours.
+     * Modifie un parcours.
      *
      * @param parcours parcours a modifier.
+     * @return le parcours modifié
      */
-    public void updateParcours(final Parcours parcours) {
-        Parcours parcoursModify = parcoursRepository.findById(
-                parcours.getId()).orElseThrow(()
-                -> new RuntimeException(String.format(
-                        "Cannot Find Parcours by ID %s", parcours.getId())));
-        parcoursModify.setDescription(parcours.getDescription());
-
-        parcoursRepository.save(parcoursModify);
+    public Parcours updateParcours(final Parcours parcours) {
+        return parcoursRepository.save(parcours);
     }
 
     /**

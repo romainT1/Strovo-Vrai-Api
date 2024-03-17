@@ -86,6 +86,27 @@ public class ParcoursServiceTest {
         assertEquals(parcoursList, foundParcoursList);
     }
 
+    @Test
+    public void testUpdateParcours() {
+        // GIVEN un parcours que l'on souhaite mettre à jour
+        String id = "p1";
+        int userId = 1;
+
+        Parcours newParcours = new Parcours();
+        newParcours.setId(id);
+        newParcours.setUserId(userId);
+        newParcours.setName("NP");
+        newParcours.setDescription("newParcours");
+
+        when(parcoursRepository.save(newParcours)).thenReturn(newParcours);
+
+        // WHEN on met à jour le parcours
+        Parcours updatedParcours = parcoursService.updateParcours(newParcours);
+
+        // EXPECTED renvoie le parcours ajouté
+        assertEquals(newParcours, updatedParcours);
+    }
+
 /*
     // Test pour la méthode getParcoursById
     @Test
