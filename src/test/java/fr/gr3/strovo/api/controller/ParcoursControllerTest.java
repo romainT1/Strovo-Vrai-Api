@@ -21,6 +21,7 @@ import static org.mockito.Mockito.*;
 public class ParcoursControllerTest {
 
     private final static int USER_ID = 1; 
+    private final static String PARCOURS_ID = "1"; 
     private final static String TOKEN = "fake_token"; 
     private static Parcours parcours1;
     private static Parcours parcours2;
@@ -71,6 +72,59 @@ public class ParcoursControllerTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         Assertions.assertNull(response.getBody());
     }
+
+    @Test
+    public void testGetParcoursById() throws Exception {
+        // GIVEN un parcours en base de donnée
+        Parcours parcours = new Parcours();
+        parcours.setId(PARCOURS_ID);
+        parcours.setUserId(USER_ID);
+        
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+        when(parcoursService.getParcoursById(any())).thenReturn(parcours);
+
+        // WHEN on recherche un parcours par son identifiant
+        ResponseEntity<Parcours> response = parcoursController.getParcoursById(PARCOURS_ID, TOKEN);
+
+        // EXPECTED code retour 200 et parcours demandé
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(parcours, response.getBody());
+    }
+
+    @Test
+    public void testGetParcoursByIdWithInvalidToken() throws Exception {
+        when(tokenService.isValidToken(any())).thenReturn(false);
+
+        // WHEN on recherche un parcours par son identifiant
+        ResponseEntity<Parcours> response = parcoursController.getParcoursById(PARCOURS_ID, TOKEN);
+
+        // EXPECTED code retour 200 et parcours demandé
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
+    }
+
+    @Test
+    public void testGetParcoursByIdButParcousNotFound() throws Exception {
+        // GIVEN un parcours en base de donnée
+        Parcours parcours = new Parcours();
+        parcours.setId(PARCOURS_ID);
+        parcours.setUserId(USER_ID);
+        
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+        when(parcoursService.getParcoursById(any())).thenReturn(null);
+
+        // WHEN on recherche un parcours par son identifiant
+        ResponseEntity<Parcours> response = parcoursController.getParcoursById(PARCOURS_ID, TOKEN);
+
+        // EXPECTED code retour 200 et parcours demandé
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
+    }
+
+    // Parcours ne correspond pas a l'id ou introuvable
+
 /*
     @Test
     public void testGetParcoursByParcoursId() {
