@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
 public class ParcoursControllerTest {
 
@@ -53,8 +56,8 @@ public class ParcoursControllerTest {
         // WHEN on ajoute un parcours
         ResponseEntity<Parcours> response = parcoursController.addParcours(parcours1, TOKEN);
 
-        // EXPECTED code retour 201 et 
-        // parcours créé avec un identifiant et une référence de l'utilisateur
+        // EXPECTED code retour 201 et parcours créé avec un identifiant
+        //           et une référence de l'utilisateur
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
         Assertions.assertEquals(parcours1, response.getBody());
         Assertions.assertNotNull(parcours1.getId());
@@ -63,6 +66,7 @@ public class ParcoursControllerTest {
 
     @Test
     public void testAddParcoursWithInvalidToken() throws Exception {
+        // GIVEN un token de connexion invalide
         when(tokenService.isValidToken(any())).thenReturn(false);
 
         // WHEN on ajoute un parcours
@@ -72,6 +76,8 @@ public class ParcoursControllerTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         Assertions.assertNull(response.getBody());
     }
+
+
 
     @Test
     public void testGetParcoursById() throws Exception {
@@ -94,18 +100,19 @@ public class ParcoursControllerTest {
 
     @Test
     public void testGetParcoursByIdWithInvalidToken() throws Exception {
+        // GIVEN un token de connexion invalide
         when(tokenService.isValidToken(any())).thenReturn(false);
 
-        // WHEN on recherche un parcours par son identifiant
+        // WHEN on recherche un parcours
         ResponseEntity<Parcours> response = parcoursController.getParcoursById(PARCOURS_ID, TOKEN);
 
-        // EXPECTED code retour 200 et parcours demandé
+        // EXPECTED code retour 403
         Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         Assertions.assertNull(response.getBody());
     }
 
     @Test
-    public void testGetParcoursByIdButParcousNotFound() throws Exception {
+    public void testGetParcoursByIdButParcoursNotFound() throws Exception {
         // GIVEN un parcours en base de donnée
         Parcours parcours = new Parcours();
         parcours.setId(PARCOURS_ID);
@@ -118,31 +125,64 @@ public class ParcoursControllerTest {
         // WHEN on recherche un parcours par son identifiant
         ResponseEntity<Parcours> response = parcoursController.getParcoursById(PARCOURS_ID, TOKEN);
 
-        // EXPECTED code retour 200 et parcours demandé
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        // EXPECTED code retour 204
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         Assertions.assertNull(response.getBody());
     }
 
-    // Parcours ne correspond pas a l'id ou introuvable
 
-/*
+
     @Test
-    public void testGetParcoursByParcoursId() {
-        // Créer un parcours
-        Parcours parcours = new Parcours();
-        parcours.setId("123");
-        parcours.setDescription("Description");
+    public void testGetParcours() {
+        // GIVEN une liste de parcours pour un utilisateur en base de donnée
+        Parcours parcours1 = new Parcours();
+        Parcours parcours2 = new Parcours();
+        parcours1.setUserId(USER_ID);
+        parcours2.setUserId(USER_ID);
 
-        // Configurer le mock pour retourner le parcours lorsqu'il est recherché par son ID
-        when(parcoursService.getParcoursById("123")).thenReturn(parcours);
+        List<Parcours> parcoursList = new ArrayList<>();
+        parcoursList.add(parcours1);
+        parcoursList.add(parcours2);
+        
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+        when(parcoursService.getParcoursByUserId(USER_ID)).thenReturn(parcoursList);
+        
+        // WHEN on recherche la liste des parcours d'un utilisateur
+        ResponseEntity<List<Parcours>> responseNoFilters = parcoursController.getParcours(TOKEN);
 
-        // Appeler la méthode getParcoursByParcoursId
-        ResponseEntity<Parcours> response = parcoursController.getParcoursByParcoursId("123");
-
-        // Vérifier que le statut de la réponse est OK et que le corps de la réponse est le parcours attendu
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals(parcours, response.getBody());
+        // EXPECTED code retour 200 et liste des parcours trouvés
+        Assertions.assertEquals(HttpStatus.OK, responseNoFilters.getStatusCode());
+        Assertions.assertEquals(parcoursList, responseNoFilters.getBody());
     }
+
+    @Test
+    public void testGetParcoursWithInvalidToken() {
+        // GIVEN un token de connexion invalide
+        when(tokenService.isValidToken(any())).thenReturn(false);
+        
+        // WHEN on recherche la liste des parcours d'un utilisateur
+        ResponseEntity<List<Parcours>> responseNoFilters = parcoursController.getParcours(TOKEN);
+
+        // EXPECTED code retour 403
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, responseNoFilters.getStatusCode());
+        Assertions.assertNull(responseNoFilters.getBody());
+    }
+
+    @Test
+    public void testGetParcoursButNoParcoursFound() {
+        // GIVEN aucun parcours pour un utiliasteur en base de donnée
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        
+        // WHEN on recherche la liste des parcours d'un utilisateur
+        ResponseEntity<List<Parcours>> responseNoFilters = parcoursController.getParcours(TOKEN);
+
+        // EXPECTED code retour 204
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, responseNoFilters.getStatusCode());
+        Assertions.assertNull(responseNoFilters.getBody());
+    }
+
+    /*
 
     @Test
     public void testDeleteParcours() {

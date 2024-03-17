@@ -73,13 +73,10 @@ public class ParcoursService {
      * Récupère la liste des parcours d'un utilisateur.
      *
      * @param userId Identifiant de l'utilisateur.
-     * @param filter Filtre correspondant à la recherche.
      * @return les parcours associés à l'utilisateur et aux filtres
      */
-    public List<Parcours> getParcoursByUserIdAndFilters(
-            final int userId, final Filter filter) {
-
-        return parcoursRepository.findAllByUserIdAndFilters(userId, filter);
+    public List<Parcours> getParcoursByUserId(final int userId) {
+        return parcoursRepository.findAllByUserId(userId);
     }
 
     /**

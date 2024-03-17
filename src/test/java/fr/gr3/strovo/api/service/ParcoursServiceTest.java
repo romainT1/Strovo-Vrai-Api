@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -51,13 +53,37 @@ public class ParcoursServiceTest {
         String id = "p1";
         Parcours parcours = new Parcours();
         parcours.setId(id);
+
         when(parcoursRepository.findById(id)).thenReturn(Optional.of(parcours));
 
-        // WHEN on recupère le parcours le parcours
+        // WHEN on recupère le parcours
         Parcours foundParcours = parcoursService.getParcoursById(id);
 
         // EXPECTED renvoie le parcours ajouté
         assertEquals(parcours, foundParcours);
+    }
+
+    @Test
+    public void testGetParcours() {
+        // GIVEN un identifant utilisateur pour lequel on veut récupérer
+        //       les parcours associés.
+        int userId = 1;
+        Parcours parcours1 = new Parcours();
+        Parcours parcours2 = new Parcours();
+        parcours1.setUserId(userId);
+        parcours2.setUserId(userId);
+
+        List<Parcours> parcoursList = new ArrayList<>();
+        parcoursList.add(parcours1);
+        parcoursList.add(parcours2);
+
+        when(parcoursRepository.findAllByUserId(userId)).thenReturn(parcoursList);
+
+        // WHEN on recupère les parcours
+        List<Parcours> foundParcoursList = parcoursService.getParcoursByUserId(userId);
+
+        // EXPECTED renvoie le parcours ajouté
+        assertEquals(parcoursList, foundParcoursList);
     }
 /*
     // Test pour la méthode getParcoursById
