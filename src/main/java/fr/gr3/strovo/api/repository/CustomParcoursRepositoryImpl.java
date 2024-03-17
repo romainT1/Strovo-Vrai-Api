@@ -38,47 +38,14 @@ public class CustomParcoursRepositoryImpl implements CustomParcoursRepository {
      * avec des filtres spécifiques.
      *
      * @param userId Identifiant de l'utilisateur.
-     * @param filter Filtre correspondant à la recherche.
      * @return les parcours associés à l'utilisateur et aux filtres.
      */
     @Override
-    public List<Parcours> findAllByUserIdAndFilters(final int userId,
-                                                    final Filter filter) {
+    public List<Parcours> findAllByUserId(final int userId) {
         Query query = new Query();
 
         Criteria criteria = Criteria.where("userId").is(userId);
         query.addCriteria(criteria);
-
-        if (filter != null) {
-            String nameParcours = filter.getNameParcours();
-
-            String startDate = filter.getStartDate();
-            String endDate = filter.getEndDate();
-
-            if (nameParcours != null) {
-                criteria.and("name").is(filter.getNameParcours());
-            }
-
-            if (startDate != null && endDate != null) {
-                long startTimestamp = Long.parseLong(startDate);
-                long endTimestamp = Long.parseLong(endDate);
-
-                Date start = new Date(startTimestamp);
-                Date end = new Date(endTimestamp);
-
-                criteria.and("date").gte(start).lte(end);
-            } else if (startDate != null) {
-                long startTimestamp = Long.parseLong(startDate);
-                Date start = new Date(startTimestamp);
-
-                criteria.and("date").gte(start);
-            } else if (endDate != null) {
-                long endTimestamp = Long.parseLong(endDate);
-                Date end = new Date(endTimestamp);
-
-                criteria.and("date").lte(end);
-            }
-        }
 
         return mongoTemplate.find(query, Parcours.class);
     }

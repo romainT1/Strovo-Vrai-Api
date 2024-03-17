@@ -67,7 +67,13 @@ public class ParcoursController {
      * Récupère un parcours par son identifiant.
      *
      * @param parcoursId Parcours à récupérer.
-     * @return ResponseEntity avec le statut HTTP correspondant.
+     * @return ResponseEntity avec le statut HTTP correspondant, 
+     * et le parcours trouvé.
+     * <ul>
+     *     <li>code 200 OK - si parcours trouvé</li>
+     *     <li>code 204 NO CONTENT - si aucun parcours trouvé</li>
+     *     <li>code 403 FORBIDDEN - si token invalide ou accès interdit</li>
+     * </ul>
      */
     @GetMapping("/{parcoursId}")
     public ResponseEntity<Parcours> getParcoursById(
@@ -79,7 +85,7 @@ public class ParcoursController {
 
             Parcours parcours = parcoursService.getParcoursById(parcoursId);
             if (parcours == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             
             if (parcours.getUserId() == userId) {
@@ -92,31 +98,32 @@ public class ParcoursController {
     }
 
     /**
-     * Récupère la liste des parcours d'un utilisateur avec des filtres.
+     * Récupère la liste des parcours d'un utilisateur.
      *
-     * @param nom nom du parcours(non requis).
-     * @param dateDebut date de début du parcours(non requis).
-     * @param dateFin date de fin du parcours(non requis).
-     * @return ResponseEntity avec le statut HTTP correspondant.
+     * @return ResponseEntity avec le statut HTTP correspondant
+     * et la liste des parcours trouvés.
+     * <ul>
+     *     <li>code 200 OK - si parcours trouvé</li>
+     *     <li>code 204 NO CONTENT - si parcours aucun trouvé</li>
+     *     <li>code 403 FORBIDDEN - si token invalide</li>
+     * </ul>
      */
     @GetMapping
-    public ResponseEntity getParcours(
-            @RequestParam(required = false) final String nom,
-            @RequestParam(required = false) final String dateDebut,
-            @RequestParam(required = false) final String dateFin,
+    public ResponseEntity<List<Parcours>> getParcours(
             @RequestHeader("Authorization") final String token) {
-        Filter filter = null;
-        if (nom != null || dateDebut != null || dateFin != null) {
-            filter = new Filter(nom, dateDebut, dateFin);
-        }
 
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
 
             List<Parcours> parcoursList =
-                    parcoursService.getParcoursByUserIdAndFilters(userId, filter);
-            return ResponseEntity.ok(parcoursList);
+                    parcoursService.getParcoursByUserId(userId);
+
+            if (parcoursList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            
+            return new ResponseEntity<>(parcoursList,  HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
