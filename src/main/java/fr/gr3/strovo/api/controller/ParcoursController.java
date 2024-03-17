@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Contrôleur pour la gestion des parcours.
@@ -46,18 +48,18 @@ public class ParcoursController {
      * Ajoute un nouveau parcours.
      *
      * @param parcours Parcours à ajouter.
-     * @return ResponseEntity avec le statut HTTP correspondant.
+     * @return ResponseEntity avec le statut HTTP correspondant et l'identifiant du parcours.
      */
     @PostMapping
     public ResponseEntity addParcours(@RequestBody final Parcours parcours,
                                       @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
+            String parcoursId = UUID.randomUUID().toString();
             int userId = tokenService.getUserIdFromToken(tokenAuth);
+            parcours.setId(parcoursId);
             parcours.setUserId(userId);
-            
-            parcoursService.addParcours(parcours);
-            return ResponseEntity.ok(parcours);
+            return ResponseEntity.ok("{\"id\": \""+ parcoursId +"\"}");
         }
         
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
