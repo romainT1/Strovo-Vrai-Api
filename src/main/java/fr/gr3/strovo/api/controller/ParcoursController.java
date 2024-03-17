@@ -133,8 +133,13 @@ public class ParcoursController {
      * Supprime un parcours.
      *
      * @param parcoursId Identifiant du parcours.
-     * @return ResponseEntity avec le statut HTTP "No Content"
-     * (204) si la suppression est réussie.
+     * @return ResponseEntity avec le statut HTTP correspondant
+     * et le parcours supprimé
+     * <ul>
+     *     <li>code 200 OK - si parcours supprimé</li>
+     *     <li>code 204 NO CONTENT - si parcours aucun trouvé</li>
+     *     <li>code 403 FORBIDDEN - si token invalide ou accès interdit</li>
+     * </ul>
      */
     @DeleteMapping("/{parcoursId}")
     public ResponseEntity deleteParcours(
@@ -145,9 +150,13 @@ public class ParcoursController {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
 
             Parcours parcours = parcoursService.getParcoursById(parcoursId);
+            if (parcours == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            
             if (parcours.getUserId() == userId) {
                 parcoursService.deleteParcours(parcoursId);
-                return ResponseEntity.noContent().build();
+                return new ResponseEntity<>(HttpStatus.OK);
             }
         }
 

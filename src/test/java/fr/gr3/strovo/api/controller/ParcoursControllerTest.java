@@ -149,11 +149,11 @@ public class ParcoursControllerTest {
         when(parcoursService.getParcoursByUserId(USER_ID)).thenReturn(parcoursList);
         
         // WHEN on recherche la liste des parcours d'un utilisateur
-        ResponseEntity<List<Parcours>> responseNoFilters = parcoursController.getParcours(TOKEN);
+        ResponseEntity<List<Parcours>> response = parcoursController.getParcours(TOKEN);
 
         // EXPECTED code retour 200 et liste des parcours trouvés
-        Assertions.assertEquals(HttpStatus.OK, responseNoFilters.getStatusCode());
-        Assertions.assertEquals(parcoursList, responseNoFilters.getBody());
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(parcoursList, response.getBody());
     }
 
     @Test
@@ -162,11 +162,11 @@ public class ParcoursControllerTest {
         when(tokenService.isValidToken(any())).thenReturn(false);
         
         // WHEN on recherche la liste des parcours d'un utilisateur
-        ResponseEntity<List<Parcours>> responseNoFilters = parcoursController.getParcours(TOKEN);
+        ResponseEntity<List<Parcours>> response = parcoursController.getParcours(TOKEN);
 
         // EXPECTED code retour 403
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, responseNoFilters.getStatusCode());
-        Assertions.assertNull(responseNoFilters.getBody());
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
     }
 
     @Test
@@ -175,13 +175,67 @@ public class ParcoursControllerTest {
         when(tokenService.isValidToken(any())).thenReturn(true);
         
         // WHEN on recherche la liste des parcours d'un utilisateur
-        ResponseEntity<List<Parcours>> responseNoFilters = parcoursController.getParcours(TOKEN);
+        ResponseEntity<List<Parcours>> response = parcoursController.getParcours(TOKEN);
 
         // EXPECTED code retour 204
-        Assertions.assertEquals(HttpStatus.NO_CONTENT, responseNoFilters.getStatusCode());
-        Assertions.assertNull(responseNoFilters.getBody());
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
     }
 
+
+
+    @Test
+    public void testDeleteParcoursById() {
+        // GIVEN un parcours d'un utilisateur en base de donnée
+        Parcours parcours = new Parcours();
+        String id = "p1";
+        parcours.setId(id);
+        parcours.setUserId(USER_ID);
+
+
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+        when(parcoursService.getParcoursById(id)).thenReturn(parcours);
+
+        // WHEN on supprime un parcours de l' utilisateur
+        ResponseEntity response = parcoursController.deleteParcours(id, TOKEN);
+        
+        // EXPECTED code retour 200
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(parcours, response.getBody());
+    }
+
+    @Test
+    public void testDeleteParcoursButInvalidToken() {
+        // GIVEN un token de connexion invalide
+        String id = "p1";
+
+        when(tokenService.isValidToken(any())).thenReturn(false);
+
+        // WHEN on supprime un parcours de l' utilisateur
+        ResponseEntity response = parcoursController.deleteParcours(id, TOKEN);
+        
+        // EXPECTED code retour 204
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
+    }
+
+    @Test
+    public void testdeleteParcoursButParcoursNotFound() {
+        // GIVEN un identifiant de parcours introuvable en base de donnée
+        String id = "p1";
+
+        when(tokenService.isValidToken(any())).thenReturn(true);
+        when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
+        when(parcoursService.getParcoursById(id)).thenReturn(null);
+
+        // WHEN on supprime un parcours de l' utilisateur
+        ResponseEntity response = parcoursController.deleteParcours(id, TOKEN);
+        
+        // EXPECTED code retour 204
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        Assertions.assertNull(response.getBody());
+    }
     /*
 
     @Test
