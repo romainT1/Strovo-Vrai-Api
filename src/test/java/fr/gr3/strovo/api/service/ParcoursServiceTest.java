@@ -85,6 +85,7 @@ public class ParcoursServiceTest {
         // EXPECTED renvoie le parcours ajouté
         assertEquals(parcoursList, foundParcoursList);
     }
+
 /*
     // Test pour la méthode getParcoursById
     @Test
