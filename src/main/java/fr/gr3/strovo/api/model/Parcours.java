@@ -6,9 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Document décrivant un Parcours effectué par un utilisateur.
@@ -44,7 +42,7 @@ public class Parcours {
     /** Durée du parcours. */
     @Field
     @JsonProperty("time")
-    private double time;
+    private long time;
 
     /** Vitesse moyenne du parcours. */
     @Field
@@ -54,12 +52,12 @@ public class Parcours {
     /** Distance parcourue. */
     @Field
     @JsonProperty("distance")
-    private float distance;
+    private double distance;
 
     /** Dénivelé du parcours. */
     @Field
     @JsonProperty("elevation")
-    private float elevation;
+    private double elevation;
 
     /** Liste des points d'intérêts associés au parcours. */
     @Field
@@ -93,10 +91,10 @@ public class Parcours {
                     final String nameParcours,
                     final String descriptionParcours,
                     final Date dateParcours,
-                    final double timeParcours,
+                    final long timeParcours,
                     final float speedParcours,
-                    final float distanceParcours,
-                    final float elevationParcours,
+                    final double distanceParcours,
+                    final double elevationParcours,
                     final InterestPoint[] interestPointsParcours,
                     final double[][] coordinates) {
         this.id = idParcours;
@@ -215,7 +213,7 @@ public class Parcours {
      *
      * @return Temps du parcours.
      */
-    public double getTime() {
+    public long getTime() {
         return time;
     }
 
@@ -224,7 +222,7 @@ public class Parcours {
      *
      * @param timeParcours Temps du parcours.
      */
-    public void setTime(final double timeParcours) {
+    public void setTime(final long timeParcours) {
         this.time = timeParcours;
     }
 
@@ -251,7 +249,7 @@ public class Parcours {
      *
      * @return Distance du parcours.
      */
-    public float getDistance() {
+    public double getDistance() {
         return distance;
     }
 
@@ -260,7 +258,7 @@ public class Parcours {
      *
      * @param distanceParcours Distance du parcours.
      */
-    public void setDistance(final float distanceParcours) {
+    public void setDistance(final double distanceParcours) {
         this.distance = distanceParcours;
     }
 
@@ -269,7 +267,7 @@ public class Parcours {
      *
      * @return Dénivelé du parcours.
      */
-    public float getElevation() {
+    public double getElevation() {
         return elevation;
     }
 
@@ -278,7 +276,7 @@ public class Parcours {
      *
      * @param elevationParcours Dénivelé positif et négatif du parcours.
      */
-    public void setElevation(final float elevationParcours) {
+    public void setElevation(final double elevationParcours) {
         this.elevation = elevationParcours;
     }
 

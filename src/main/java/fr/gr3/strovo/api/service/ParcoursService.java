@@ -51,9 +51,10 @@ public class ParcoursService {
      * Ajoute un nouveau parcours.
      *
      * @param parcours Parcours à ajouter.
+     * @return le parcours ajouté
      */
-    public void addParcours(final Parcours parcours) {
-        parcoursRepository.insert(parcours);
+    public Parcours addParcours(final Parcours parcours) {
+        return parcoursRepository.insert(parcours);
     }
 
     /**
