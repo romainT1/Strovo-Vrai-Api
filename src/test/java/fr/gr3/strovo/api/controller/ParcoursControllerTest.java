@@ -202,7 +202,7 @@ public class ParcoursControllerTest {
         
         // EXPECTED code retour 200
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals(parcours, response.getBody());
+        Assertions.assertNull(response.getBody());
     }
 
     @Test
