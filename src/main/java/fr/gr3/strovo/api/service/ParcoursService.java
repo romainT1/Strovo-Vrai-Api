@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service pour la gestion des parcours.
@@ -64,10 +65,8 @@ public class ParcoursService {
      * @return le parcours correspondant à l'identifiant
      */
     public Parcours getParcoursById(final String parcoursId) {
-        return parcoursRepository.findById(parcoursId).orElseThrow(()
-                -> new RuntimeException(String.format(
-                        "Cannot Find Parcours by Parcours Id - %s",
-                parcoursId)));
+        Optional<Parcours> parcours = parcoursRepository.findById(parcoursId);
+        return parcours.isPresent() ? parcours.get() : null;
     }
 
     /**

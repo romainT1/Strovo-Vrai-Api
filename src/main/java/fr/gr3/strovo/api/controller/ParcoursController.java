@@ -70,7 +70,7 @@ public class ParcoursController {
      * @return ResponseEntity avec le statut HTTP correspondant.
      */
     @GetMapping("/{parcoursId}")
-    public ResponseEntity getParcoursByParcoursId(
+    public ResponseEntity<Parcours> getParcoursById(
                                 @PathVariable final String parcoursId,
                                 @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
@@ -78,8 +78,13 @@ public class ParcoursController {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
 
             Parcours parcours = parcoursService.getParcoursById(parcoursId);
+            if (parcours == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            
             if (parcours.getUserId() == userId) {
-                return ResponseEntity.ok(parcoursService.getParcoursById(parcoursId));
+                return new ResponseEntity<>(
+                    parcoursService.getParcoursById(parcoursId), HttpStatus.OK);
             }
         }
 
