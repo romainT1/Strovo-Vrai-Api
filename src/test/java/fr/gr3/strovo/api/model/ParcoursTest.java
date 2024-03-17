@@ -11,15 +11,15 @@ public class ParcoursTest {
     @Test
     public void testConstructorAndGetters() {
         // GIVEN différentes valeurs d'un parcours
-        String id = "123";
-        int userId = 456;
-        String name = "ParcoursTest";
-        String description = "Description du parcours de test";
+        String id = "p1";
+        int userId = 1;
+        String name = "Ptest";
+        String description = "Parcours test";
         Date date = new Date();
-        double time = 10.5;
+        long time = 10;
         float speed = 20.0f;
-        float distance = 30.0f;
-        float elevation = 100.5f;
+        double distance = 30.0;
+        double elevation = 100.5;
         InterestPoint[] interestPoints = { 
             new InterestPoint("IP", "IPTest", new double[]{45.0, 48.2}),
             new InterestPoint("IP", "IPTest", new double[]{60.0, 71.3}),
@@ -132,7 +132,7 @@ public class ParcoursTest {
         Parcours parcours = new Parcours();
 
         // WHEN on définit un nouveau temps
-        double time = 10.5;
+        long time = 10;
         parcours.setTime(time);
 
         // THEN le nouveau temps est correctement défini
@@ -158,7 +158,7 @@ public class ParcoursTest {
         Parcours parcours = new Parcours();
 
         // WHEN on définit une nouvelle distance
-        float distance = 30.0f;
+        double distance = 30.0;
         parcours.setDistance(distance);
 
         // THEN la nouvelle distance est correctement définie

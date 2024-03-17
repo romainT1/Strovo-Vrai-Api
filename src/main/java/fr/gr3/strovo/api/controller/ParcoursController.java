@@ -1,10 +1,8 @@
 package fr.gr3.strovo.api.controller;
 
 import fr.gr3.strovo.api.model.Filter;
-import fr.gr3.strovo.api.model.InterestPoint;
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.model.Token;
-import fr.gr3.strovo.api.service.InterestPointService;
 import fr.gr3.strovo.api.service.ParcoursService;
 import fr.gr3.strovo.api.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,12 +30,6 @@ public class ParcoursController {
     private ParcoursService parcoursService;
 
     /**
-     * Service pour la gestion des points d'interet.
-     */
-    @Autowired
-    private InterestPointService interestPointService;
-
-    /**
      * Constructeur du contrôleur.
      */
     public ParcoursController() {
@@ -48,18 +39,25 @@ public class ParcoursController {
      * Ajoute un nouveau parcours.
      *
      * @param parcours Parcours à ajouter.
-     * @return ResponseEntity avec le statut HTTP correspondant et l'identifiant du parcours.
+     * @return une réponse http et le parcours ajouté :
+     * <ul>
+     *     <li>code 201 CREATED - si parcours ajouté</li>
+     *     <li>code 403 FORBIDDEN - si token invalide</li>
+     * </ul>
      */
     @PostMapping
-    public ResponseEntity addParcours(@RequestBody final Parcours parcours,
+    public ResponseEntity<Parcours> addParcours(@RequestBody final Parcours parcours,
                                       @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             String parcoursId = UUID.randomUUID().toString();
             int userId = tokenService.getUserIdFromToken(tokenAuth);
+
             parcours.setId(parcoursId);
             parcours.setUserId(userId);
-            return ResponseEntity.ok("{\"id\": \""+ parcoursId +"\"}");
+            parcoursService.addParcours(parcours);
+
+            return new ResponseEntity<>(parcours, HttpStatus.CREATED);
         }
         
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
