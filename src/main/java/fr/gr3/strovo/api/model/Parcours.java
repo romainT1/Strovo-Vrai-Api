@@ -101,13 +101,13 @@ public class Parcours {
         this.userId = userIdParcours;
         this.name = nameParcours;
         this.description = descriptionParcours;
-        this.date = dateParcours;
+        this.date = new Date(dateParcours.getTime());
         this.time = timeParcours;
         this.speed = speedParcours;
         this.distance = distanceParcours;
         this.elevation = elevationParcours;
-        this.interestPoints = interestPointsParcours;
-        this.coordinates = coordinates;
+        this.interestPoints = interestPointsParcours.clone();
+        this.coordinates = coordinates.clone();
     }
 
     /**
@@ -196,7 +196,7 @@ public class Parcours {
      * @return Date du parcours.
      */
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     /**
@@ -205,7 +205,7 @@ public class Parcours {
      * @param dateParcours Description du parcours.
      */
     public void setDate(final Date dateParcours) {
-        this.date = dateParcours;
+        this.date = new Date(dateParcours.getTime());
     }
 
     /**
@@ -296,7 +296,7 @@ public class Parcours {
      *                                  d'interêts du parcours.
      */
     public void setInterestPoints(final InterestPoint[] interestPointsParcours) {
-        this.interestPoints = interestPointsParcours;
+        this.interestPoints = interestPointsParcours.clone();
     }
 
     /**
@@ -305,7 +305,7 @@ public class Parcours {
      * @return Points du parcours.
      */
     public double[][] getCoordinates() {
-        return coordinates;
+        return coordinates.clone();
     }
 
     /**
