@@ -166,6 +166,7 @@ public class ParcoursController {
     /**
      * Met à jour les informations d'un parcours existant.
      *
+     * @id identifiant du parcours à modifier
      * @param parcours Parcours contenant les nouvelles informations
      * à mettre à jour.
      * @return ResponseEntity avec le statut HTTP correspondant
@@ -176,21 +177,23 @@ public class ParcoursController {
      *     <li>code 403 FORBIDDEN - si token invalide ou accès interdit</li>
      * </ul>
      */
-    @PutMapping
+    @PutMapping("/{parcoursId}")
     public ResponseEntity<Parcours> updateParcours(
+            @PathVariable final String parcoursId,
             @RequestBody final Parcours parcours,
             @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
 
-            Parcours parcoursToEdit = parcoursService.getParcoursById(parcours.getId());
+            Parcours parcoursToEdit = parcoursService.getParcoursById(parcoursId);
             if (parcoursToEdit == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             if (userId == parcoursToEdit.getUserId()) {
-                Parcours newParcours = parcoursService.updateParcours(parcours);
+                parcoursToEdit.setDescription(parcours.getDescription());
+                Parcours newParcours = parcoursService.updateParcours(parcoursToEdit);
                 return new ResponseEntity<>(newParcours, HttpStatus.OK);
             }
         }
