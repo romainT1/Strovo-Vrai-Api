@@ -189,7 +189,7 @@ public class ParcoursController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            if (parcours.getUserId() == userId) {
+            if (userId == parcoursToEdit.getUserId()) {
                 Parcours newParcours = parcoursService.updateParcours(parcours);
                 return new ResponseEntity<>(newParcours, HttpStatus.OK);
             }
