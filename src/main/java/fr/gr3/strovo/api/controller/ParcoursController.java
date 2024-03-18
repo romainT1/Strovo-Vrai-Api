@@ -191,9 +191,6 @@ public class ParcoursController {
 
             if (parcours.getUserId() == userId) {
                 Parcours newParcours = parcoursService.updateParcours(parcours);
-                if (newParcours == null) {
-                    return new ResponseEntity<>(newParcours, HttpStatus.OK);
-                }
                 return new ResponseEntity<>(newParcours, HttpStatus.OK);
             }
         }

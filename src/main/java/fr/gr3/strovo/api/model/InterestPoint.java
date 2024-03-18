@@ -40,7 +40,7 @@ public class InterestPoint {
                          final double[] coordinatesParam) {
         this.name = nameParam;
         this.description = descriptionParam;
-        this.coordinates = coordinatesParam;
+        this.coordinates = coordinatesParam.clone();
     }
 
     /**
