@@ -246,22 +246,23 @@ public class ParcoursControllerTest {
         oldParcours.setDescription("oldParcours");
 
         Parcours newParcours = new Parcours();
-        newParcours.setId(id);
-        newParcours.setUserId(USER_ID);
-        newParcours.setName("NP");
         newParcours.setDescription("newParcours");
+
+        Parcours editedParcours = oldParcours;
+        editedParcours.setDescription(newParcours.getDescription());
 
         when(tokenService.isValidToken(any())).thenReturn(true);
         when(tokenService.getUserIdFromToken(any())).thenReturn(USER_ID);
         when(parcoursService.getParcoursById(id)).thenReturn(oldParcours);
-        when(parcoursService.updateParcours(newParcours)).thenReturn(newParcours);
+
+        when(parcoursService.updateParcours(any())).thenReturn(editedParcours);
 
         // WHEN on modifie le parcours de l'utilisateur
-        ResponseEntity<Parcours> response = parcoursController.updateParcours(newParcours, TOKEN);
+        ResponseEntity<Parcours> response = parcoursController.updateParcours(id, newParcours, TOKEN);
 
         // EXPECTED code retour 200
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals(newParcours, response.getBody());
+        Assertions.assertEquals(editedParcours, response.getBody());
     }
 
     @Test
@@ -279,7 +280,7 @@ public class ParcoursControllerTest {
         when(tokenService.isValidToken(any())).thenReturn(false);
 
         // WHEN on modifie le parcours de l'utilisateur
-        ResponseEntity<Parcours> response = parcoursController.updateParcours(newParcours, TOKEN);
+        ResponseEntity<Parcours> response = parcoursController.updateParcours(id, newParcours, TOKEN);
 
         // EXPECTED code retour 403
         Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -303,7 +304,7 @@ public class ParcoursControllerTest {
        when(parcoursService.getParcoursById(id)).thenReturn(null);
 
        // WHEN on modifie le parcours de l'utilisateur
-       ResponseEntity<Parcours> response = parcoursController.updateParcours(newParcours, TOKEN);
+       ResponseEntity<Parcours> response = parcoursController.updateParcours(id, newParcours, TOKEN);
 
        // EXPECTED code retour 200
        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
