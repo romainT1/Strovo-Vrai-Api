@@ -1,12 +1,9 @@
 package fr.gr3.strovo.api.repository;
 
-import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.Parcours;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -1,6 +1,5 @@
 package fr.gr3.strovo.api.repository;
 
-import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.Parcours;
 
 import java.util.List;
