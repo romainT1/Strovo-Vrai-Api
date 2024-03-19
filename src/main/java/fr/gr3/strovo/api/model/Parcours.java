@@ -84,7 +84,8 @@ public class Parcours {
      * @param elevationParcours dénivelé positif et négatif du parcours
      * @param interestPointsParcours liste des points d'intérêts associés
      *                                  au parcours
-     * @param coordinates liste des coordonnées de points formant le parcours
+     * @param coordinatesParcours liste des coordonnées de points
+     *                            formant le parcours
      */
     public Parcours(final String idParcours,
                     final int userIdParcours,
@@ -96,7 +97,7 @@ public class Parcours {
                     final double distanceParcours,
                     final double elevationParcours,
                     final InterestPoint[] interestPointsParcours,
-                    final double[][] coordinates) {
+                    final double[][] coordinatesParcours) {
         this.id = idParcours;
         this.userId = userIdParcours;
         this.name = nameParcours;
@@ -107,7 +108,7 @@ public class Parcours {
         this.distance = distanceParcours;
         this.elevation = elevationParcours;
         this.interestPoints = interestPointsParcours.clone();
-        this.coordinates = coordinates.clone();
+        this.coordinates = coordinatesParcours.clone();
     }
 
     /**
@@ -295,7 +296,8 @@ public class Parcours {
      * @param interestPointsParcours Identifiants des points
      *                                  d'interêts du parcours.
      */
-    public void setInterestPoints(final InterestPoint[] interestPointsParcours) {
+    public void setInterestPoints(final InterestPoint[]
+                                        interestPointsParcours) {
         this.interestPoints = interestPointsParcours.clone();
     }
 
@@ -311,9 +313,9 @@ public class Parcours {
     /**
      * Définit les coordonnées des points du parcours.
      *
-     * @param coordinates Points du parcours.
+     * @param newCoordinates Points du parcours.
      */
-    public void setPointsCoordinates(double[][] coordinates) {
-        this.coordinates = coordinates.clone();
+    public void setPointsCoordinates(final double[][] newCoordinates) {
+        this.coordinates = newCoordinates.clone();
     }
 }

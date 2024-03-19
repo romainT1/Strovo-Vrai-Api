@@ -1,6 +1,5 @@
 package fr.gr3.strovo.api.controller;
 
-import fr.gr3.strovo.api.model.Filter;
 import fr.gr3.strovo.api.model.Parcours;
 import fr.gr3.strovo.api.model.Token;
 import fr.gr3.strovo.api.service.ParcoursService;
@@ -8,7 +7,15 @@ import fr.gr3.strovo.api.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +27,9 @@ import java.util.UUID;
 @RequestMapping("/parcours")
 public class ParcoursController {
 
+    /**
+     * Service d'authentification et de gestion des tokens.
+     */
     @Autowired
     private TokenService tokenService;
 
@@ -39,6 +49,7 @@ public class ParcoursController {
      * Ajoute un nouveau parcours.
      *
      * @param parcours Parcours à ajouter.
+     * @param token    Token d'autorisation.
      * @return une réponse http et le parcours ajouté :
      * <ul>
      *     <li>code 201 CREATED - si parcours ajouté</li>
@@ -46,8 +57,9 @@ public class ParcoursController {
      * </ul>
      */
     @PostMapping
-    public ResponseEntity<Parcours> addParcours(@RequestBody final Parcours parcours,
-                                      @RequestHeader("Authorization") final String token) {
+    public ResponseEntity<Parcours> addParcours(
+            @RequestBody final Parcours parcours,
+            @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             String parcoursId = UUID.randomUUID().toString();
@@ -59,15 +71,15 @@ public class ParcoursController {
 
             return new ResponseEntity<>(parcours, HttpStatus.CREATED);
         }
-        
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
      * Récupère un parcours par son identifiant.
      *
-     * @param parcoursId Parcours à récupérer.
-     * @return ResponseEntity avec le statut HTTP correspondant, 
+     * @param parcoursId Identifiant du parcours à récupérer.
+     * @param token      Token d'autorisation.
+     * @return ResponseEntity avec le statut HTTP correspondant,
      * et le parcours trouvé.
      * <ul>
      *     <li>code 200 OK - si parcours trouvé</li>
@@ -77,8 +89,8 @@ public class ParcoursController {
      */
     @GetMapping("/{parcoursId}")
     public ResponseEntity<Parcours> getParcoursById(
-                                @PathVariable final String parcoursId,
-                                @RequestHeader("Authorization") final String token) {
+            @PathVariable final String parcoursId,
+            @RequestHeader("Authorization") final String token) {
         Token tokenAuth = new Token(token);
         if (tokenService.isValidToken(tokenAuth)) {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
@@ -87,19 +99,18 @@ public class ParcoursController {
             if (parcours == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            
             if (parcours.getUserId() == userId) {
                 return new ResponseEntity<>(
-                    parcoursService.getParcoursById(parcoursId), HttpStatus.OK);
+                        parcoursService.getParcoursById(parcoursId),
+                        HttpStatus.OK);
             }
         }
-
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
      * Récupère la liste des parcours d'un utilisateur.
-     *
+     * @param token Token d'autorisation.
      * @return ResponseEntity avec le statut HTTP correspondant
      * et la liste des parcours trouvés.
      * <ul>
@@ -122,16 +133,14 @@ public class ParcoursController {
             if (parcoursList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            
             return new ResponseEntity<>(parcoursList,  HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
      * Supprime un parcours.
-     *
+     * @param token Token d'autorisation.
      * @param parcoursId Identifiant du parcours.
      * @return ResponseEntity avec le statut HTTP correspondant
      * et le parcours supprimé
@@ -153,21 +162,20 @@ public class ParcoursController {
             if (parcours == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            
             if (parcours.getUserId() == userId) {
                 parcoursService.deleteParcours(parcoursId);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }
-
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
      * Met à jour les informations d'un parcours existant.
      *
-     * @id identifiant du parcours à modifier
+     * @param parcoursId identifiant du parcours à modifier
      * @param parcours Parcours contenant les nouvelles informations
+     * @param token Token d'autorisation.
      * à mettre à jour.
      * @return ResponseEntity avec le statut HTTP correspondant
      * et le parcours modifié
@@ -197,7 +205,6 @@ public class ParcoursController {
                 return new ResponseEntity<>(newParcours, HttpStatus.OK);
             }
         }
-
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
