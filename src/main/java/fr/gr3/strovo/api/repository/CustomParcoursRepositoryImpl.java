@@ -4,6 +4,7 @@ import fr.gr3.strovo.api.model.Parcours;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+
 import java.util.List;
 
 /**
@@ -31,11 +32,10 @@ public class CustomParcoursRepositoryImpl implements CustomParcoursRepository {
     }
 
     /**
-     * Récupère la liste des parcours d'un utilisateur
-     * avec des filtres spécifiques.
+     * Récupère la liste des parcours d'un utilisateur.
      *
      * @param userId Identifiant de l'utilisateur.
-     * @return les parcours associés à l'utilisateur et aux filtres.
+     * @return les parcours associés à l'utilisateur.
      */
     @Override
     public List<Parcours> findAllByUserId(final int userId) {

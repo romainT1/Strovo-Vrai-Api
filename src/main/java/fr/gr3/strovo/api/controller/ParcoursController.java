@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 import java.util.UUID;
 
@@ -194,14 +195,16 @@ public class ParcoursController {
         if (tokenService.isValidToken(tokenAuth)) {
             int userId = tokenService.getUserIdFromToken(tokenAuth);
 
-            Parcours parcoursToEdit = parcoursService.getParcoursById(parcoursId);
+            Parcours parcoursToEdit =
+                    parcoursService.getParcoursById(parcoursId);
             if (parcoursToEdit == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             if (userId == parcoursToEdit.getUserId()) {
                 parcoursToEdit.setDescription(parcours.getDescription());
-                Parcours newParcours = parcoursService.updateParcours(parcoursToEdit);
+                Parcours newParcours =
+                        parcoursService.updateParcours(parcoursToEdit);
                 return new ResponseEntity<>(newParcours, HttpStatus.OK);
             }
         }

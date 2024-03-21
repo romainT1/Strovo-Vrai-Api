@@ -1,15 +1,14 @@
 package fr.gr3.strovo.api;
 
 
-import java.util.Arrays;
-import java.util.List;
-
 import fr.gr3.strovo.api.model.Token;
-import org.springframework.web.servlet.HandlerInterceptor;
-
 import fr.gr3.strovo.api.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Intercepteur de toutes les requêtes API.

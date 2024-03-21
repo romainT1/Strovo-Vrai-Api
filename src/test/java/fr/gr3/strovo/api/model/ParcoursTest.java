@@ -1,8 +1,8 @@
 package fr.gr3.strovo.api.model;
 
-import java.util.Date;
-
 import org.junit.jupiter.api.Test;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 

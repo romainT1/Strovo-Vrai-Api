@@ -1,19 +1,17 @@
 package fr.gr3.strovo.api.service;
 
-import java.util.Date;
-import java.util.UUID;
-
-import fr.gr3.strovo.api.model.Token;
-import fr.gr3.strovo.api.model.User;
-
-import org.springframework.stereotype.Service;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import fr.gr3.strovo.api.model.Token;
+import fr.gr3.strovo.api.model.User;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * Service pour la gestion des tokens.
