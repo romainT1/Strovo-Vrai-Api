@@ -1,40 +1,40 @@
-**# Strovo API**
+# Strovo API
 
-L'API Strovo a été conçue pour fournir un ensemble de fonctionnalités permettant d'intégrer les services de gestion de parcours et de points d'intérêt dans l'application Strovo, spécialement conçue pour les coureurs.
+L'API Strovo a été conçue pour fournir un ensemble de fonctionnalités permettant l'intégration des services de gestion de parcours et de points d'intérêt dans l'application Strovo, spécialement conçue pour les coureurs.
 
 ## Objectif de l'API
 
-L'API Strovo vise à faciliter l'intégration des fonctionnalités principales de l'application Strovo. Ces fonctionnalités comprennent la création, la mise à jour, la récupération et la suppression des parcours et des points d'intérêt des utilisateurs, ainsi que l'ajout d'utilisateurs et leur authentification.
+L'objectif de l'API Strovo est de faciliter l'intégration des fonctionnalités principales de l'application Strovo. Ces fonctionnalités incluent la création, la mise à jour, la récupération, et la suppression de parcours et de points d'intérêt par les utilisateurs, ainsi que l'ajout d'utilisateurs et leur authentification.
 
 ## Fonctionnalités
 
-L'API Strovo offre les fonctionnalités principales suivantes :
+Voici les principales fonctionnalités offertes par l'API Strovo :
 
-- **Création de parcours** : Permet aux utilisateurs de créer de nouveaux parcours en spécifiant les points du parcours, ainsi que les points d'intérêt (points d'eau, zones de repos, etc.) sur le parcours.
+- **Création de parcours** : Permet aux utilisateurs de créer de nouveaux parcours en spécifiant les points du parcours et les points d'intérêt (comme les points d'eau et les zones de repos) le long du parcours.
 
-- **Mise à jour de parcours** : Permet aux utilisateurs de mettre à jour la description de leurs parcours.
+- **Mise à jour de parcours** : Autorise les utilisateurs à mettre à jour la description de leurs parcours existants.
 
-- **Récupération de parcours** : Permet aux utilisateurs de récupérer les détails de leurs parcours enregistrés, y compris les points du parcours, les statistiques de performance, etc.
+- **Récupération de parcours** : Offre aux utilisateurs la possibilité de récupérer les détails de leurs parcours enregistrés, y compris les points de passage, les statistiques de performance, etc.
 
-- **Suppression de parcours** : Permet aux utilisateurs de supprimer un parcours enregistré de leur compte.
+- **Suppression de parcours** : Permet aux utilisateurs de supprimer un parcours qu'ils ont enregistré dans leur compte.
 
-- **Récupération de la liste des parcours d'un utilisateur** : Permet aux utilisateurs de récupérer la liste des parcours enregistrés sur leur compte.
+- **Récupération de la liste des parcours d'un utilisateur** : Autorise les utilisateurs à consulter la liste de tous leurs parcours enregistrés.
 
-- **Ajout d'un utilisateur** : Permet l'ajout d'un nouvel utilisateur avec son nom, prénom, email et mot de passe.
+- **Ajout d'un utilisateur** : Facilite l'ajout d'un nouvel utilisateur avec son nom, prénom, adresse email, et mot de passe.
 
-- **Connexion** : Permet à un utilisateur existant de se connecter à l'application Strovo.
+- **Connexion** : Permet à un utilisateur existant de se connecter à son compte dans l'application Strovo.
 
 ## Utilisation de l'API
 
-L'API Strovo utilise des requêtes HTTP pour communiquer et des codes de statut standard pour indiquer le succès ou l'échec d'une requête. Les données sont échangées au format JSON.
+L'API Strovo communique via des requêtes HTTP et utilise des codes de statut standard pour indiquer le succès ou l'échec d'une requête. Les données sont échangées au format JSON.
 
 ## Authentification
 
-L'API Strovo utilise une authentification basée sur une clé d’API (API Key). Vous devez inclure votre clé API dans l'en-tête Authorization de chaque requête que vous envoyez à l'API à l'exception des requêtes d'inscription et de connexion.
+L'API Strovo requiert une authentification basée sur une clé d'API (API Key). Vous devez inclure votre clé API dans l'en-tête `Authorization` de chaque requête envoyée à l'API, à l'exception des requêtes d'inscription et de connexion.
 
 ## Support
 
-Pour toute question ou assistance concernant l'API Strovo, veuillez nous contacter aux adresses suivantes :
+Pour toute question ou demande d'assistance concernant l'API Strovo, veuillez contacter :
 
 **- aymeric.thevenet@iut-rodez.fr**
 **- axel.pedrero@iut-rodez.fr**
