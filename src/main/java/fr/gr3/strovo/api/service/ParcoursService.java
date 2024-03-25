@@ -97,11 +97,4 @@ public class ParcoursService {
         return parcoursRepository.save(parcours);
     }
 
-    /**
-     * @return le repository associé au service.
-     */
-    public ParcoursRepository getParcoursRepository() {
-        return this.parcoursRepository;
-    }
-
 }

@@ -6,9 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -32,42 +29,42 @@ class TokenServiceTest {
 
     @Test
     public void generateToken() {
-        // GIVEN generated token for user
+        // GIVEN Token généré pour un utilisateur
         Token token = tokenService.generateToken(user, 0);
-        // EXPECTED not null token value
+        // EXPECTED la valeur du token non null
         assertNotNull(token.getValue());
     }
 
     @Test
     public void isValidToken_WithValidToken() {
-        // GIVEN generated token for user that expires in 20 sec
+        // GIVEN Token généré pour un utilisateur qui expire dans 20 sec
         Token token = tokenService.generateToken(user, 20000);
-        // EXPECTED token is valid
+        // EXPECTED token est valid
         assertTrue(tokenService.isValidToken(token));
     }
 
     @Test
     public void isValidToken_WithNotValidToken() throws InterruptedException {
-        // GIVEN generated token for user that expires in 1 second
-        int lifeTimeSecond = 1;
-        Token token = tokenService.generateToken(user, lifeTimeSecond * 1000);
+        // GIVEN Token généré pour un utilisateur qui expire dans 1 sec
+        int lifeTimeMs = 1000;
+        Token token = tokenService.generateToken(user, lifeTimeMs);
 
-        // WHEN we wait for token expiration
-        TimeUnit.SECONDS.sleep(lifeTimeSecond);
+        // WHEN nous attendons l'expiration du token
+        Thread.sleep(lifeTimeMs);
 
-        // THEN token is not valid
+        // THEN token n'est pas valide
         assertFalse(tokenService.isValidToken(token));
     }
 
     @Test
     public void getIdFromToken() {
-        // GIVEN generated token for user that expires in 20 sec
+        // GIVEN Token généré pour un utilisateur qui expire dans 20 sec
         Token token = tokenService.generateToken(user, 20000);
 
-        // WHEN get user id from the token
+        // WHEN Récupère le user id du token
         int userId = tokenService.getUserIdFromToken(token);
 
-        // EXPECTED userId is correct
+        // EXPECTED userId est correct
         assertEquals(userId, USER_ID);
     }
 }

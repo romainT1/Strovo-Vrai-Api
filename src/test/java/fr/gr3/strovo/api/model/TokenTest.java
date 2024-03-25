@@ -7,14 +7,16 @@ public class TokenTest {
 
     @Test
     public void testToken() {
-        // Test du constructeur et de la méthode getValue
+        // GIVEN un token est créé avec une valeur spécifique
         String tokenValue = "testValue";
         Token token = new Token(tokenValue);
+        // THEN la valeur récupérée doit correspondre à la valeur définie lors de la création
         assertEquals(tokenValue, token.getValue());
 
-        // Test de la méthode setValue
+        // WHEN la valeur du token est modifiée
         String newValue = "newValue";
         token.setValue(newValue);
+        // THEN la nouvelle valeur doit correspondre à la valeur mise à jour
         assertEquals(newValue, token.getValue());
     }
 }
