@@ -15,8 +15,7 @@ jobs:
     # Liste des étapes à effectuer dans ce job.
     steps:
       # Étape 1: Récupération du code sur le dépôt.
-      - uses: actions/checkout@v3
-        # Utilise l'action checkout pour cloner le code du dépôt.
+      - uses: actions/checkout@v3 # Utilise l'action checkout pour cloner le code du dépôt.
     
       # Étape 2: Configuration de JDK 17.
       - name: Set up JDK 17
