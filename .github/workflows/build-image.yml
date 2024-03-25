@@ -28,8 +28,7 @@ jobs:
       
       # Étape 3: Construction du projet avec Maven.
       - name: Build with Maven
-        run: mvn -B package
-        # Exécute Maven en mode batch pour compiler le projet et empaqueter les artefacts, ici un fichier .jar.
+        run: mvn -B package # Exécute Maven en mode batch pour compiler le projet et empaqueter les artefacts, ici un fichier .jar.
 
       # Étape 4: Enregistre l'artefact construit.
       - name: Upload a Build Artifact
