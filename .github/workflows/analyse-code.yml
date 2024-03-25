@@ -1,38 +1,38 @@
 name: Java CI with Maven
 
-# Se déclenche lors d'un push sur la branche master 
+# Se déclenche lors d'un push sur la branche master ou lors d'une pull request vers cette même branche
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ] # Déclenche le workflow lors d'un push sur la branche master
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master" ] # Déclenche le workflow lors d'une pull request vers la branche master
 
-# Jobs à effectuer lors de l'exécution
+# Définit les jobs à effectuer lors de l'exécution du workflow
 jobs:
-  analyse-code:
+  analyse-code: # Nom du job, peut être n'importe quel identifiant unique
 
-    # O.S. sur lequel vont être exécutés les jobs
-    runs-on: ubuntu-latest
+    # Spécifie l'OS sur lequel les jobs vont être exécutés
+    runs-on: ubuntu-latest # Utilise la dernière version stable d'Ubuntu disponible
 
-    # Etapes à effectuer
+    # Liste des étapes à effectuer dans ce job
     steps:
-      # Récupération du code sur le dépot
-      - uses: actions/checkout@v3
+      # Étape 1: Récupération du code sur le dépôt
+      - uses: actions/checkout@v3 # Utilise l'action checkout pour récupérer le code du dépôt
 
-      # Configuration de JDK 17
+      # Étape 2: Configuration de JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
+          java-version: '17' # Spécifie la version de Java à utiliser
+          distribution: 'temurin' # Spécifie la distribution de Java
+          cache: maven # Active le cache pour Maven afin d'accélérer les builds successifs
 
-      # Construction avec Maven
+      # Étape 3: Construction du projet avec Maven
       - name: Build with Maven
-        run: mvn -B package
+        run: mvn -B package # Exécute Maven en mode batch (sans interaction) pour compiler le projet et empaqueter les artefacts
 
-      # Génération du rapport JUnit
+      # Étape 4: Génération du rapport JUnit
       - name: JUnit Report Action
         uses: mikepenz/action-junit-report@v4.0.3
         with:
-          report_paths: 'target/surefire-reports/TEST-*.xml'
+          report_paths: 'target/surefire-reports/TEST-*.xml' # Spécifie l'emplacement des rapports de tests pour leur analyse et publication dans l'UI GitHub
