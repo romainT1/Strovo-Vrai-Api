@@ -82,8 +82,6 @@ public class ParcoursTest {
         assertEquals(userId, parcours.getUserId());
     }
 
-// Vous pouvez tester les autres setters de manière similaire à testSetUserId()
-
     @Test
     public void testGetInterestPoints() {
         // Création d'une instance de la classe Parcours
