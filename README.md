@@ -40,3 +40,6 @@ Pour toute question ou demande d'assistance concernant l'API Strovo, veuillez co
 **- axel.pedrero@iut-rodez.fr**
 **- romain.trimouille@iut-rodez.fr**
 **- theo.versepuech@iut-rodez.fr**
+
+## Google Drive
+https://drive.google.com/drive/folders/1RTl-BC-zJKW8FtOr6zdkiPwjdQx8N4YB
